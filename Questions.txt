@@ -1,5 +1,0 @@
-1. How can I tell if a user has logged in or not?
-	- I want to take away the dashboard menu option until the
-		user is logged in to an account
-	- Once Logged in, I want to take away the login option in the menu
-		and replace it with a text like, "Hi user!"
