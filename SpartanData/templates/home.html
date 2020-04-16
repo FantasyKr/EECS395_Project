@@ -16,7 +16,7 @@
 
 		<!-- Header -->
 			<header id="header" class="alt">
-				<img src="images/logo.png" height="200" width="200">
+				<img src="{% static 'images/logo.png' %}" height="200" width="200">
 				<nav id="nav">
 					<ul>
 						<li><a href="home">Home</a></li>
@@ -73,7 +73,7 @@
 						</header>
 						<div class="feature-grid">
 							<div class="feature">
-								<div class="image rounded"><img src="images/pic04.jpg" alt="" /></div>
+								<div class="image rounded"><img src="{% static 'images/pic04.jpg' %}" alt="" /></div>
 								<div class="content">
 									<header>
 										<h4>Example Graph #1</h4>
@@ -82,7 +82,7 @@
 								</div>
 							</div>
 							<div class="feature">
-								<div class="image rounded"><img src="images/pic05.jpg" alt="" /></div>
+								<div class="image rounded"><img src="{% static 'images/pic05.jpg' %}" alt="" /></div>
 								<div class="content">
 									<header>
 										<h4>Example Graph #2</h4>
@@ -91,7 +91,7 @@
 								</div>
 							</div>
 							<div class="feature">
-								<div class="image rounded"><img src="images/pic06.jpg" alt="" /></div>
+								<div class="image rounded"><img src="{% static 'images/pic06.jpg' %}" alt="" /></div>
 								<div class="content">
 									<header>
 										<h4>Example Graph #3</h4>
@@ -100,7 +100,7 @@
 								</div>
 							</div>
 							<div class="feature">
-								<div class="image rounded"><img src="images/pic07.jpg" alt="" /></div>
+								<div class="image rounded"><img src="{% static 'images/pic07.jpg' %}" alt="" /></div>
 								<div class="content">
 									<header>
 										<h4>Example Graph #4</h4>
@@ -124,10 +124,10 @@
 			</footer>
 
 		<!-- Scripts -->
-		<script src="./static/assets/js/jquery.min.js"></script>
-		<script src="./static/assets/js/skel.min.js"></script>
-		<script src="./static/assets/js/util.js"></script>
-		<script src="./static/assets/js/main.js"></script>
+		<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+		<script src="{% static 'assets/js/skel.min.js' %}"></script>
+		<script src="{% static 'assets/js/util.js' %}"></script>
+		<script src="{% static 'assets/js/main.js' %}"></script>
 
 	</body>
 </html>
