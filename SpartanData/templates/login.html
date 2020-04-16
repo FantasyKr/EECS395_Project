@@ -1,6 +1,20 @@
   {% load static %}
   <html>
     <link rel="stylesheet" type="text/css" href="{% static 'assets/css/main.css' %}" />
+
+    <header id="header">
+      <h1><strong><a href="home">SpartanData</a></strong></h1>
+      <nav id="nav">
+        <ul>
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li><a href="{% url 'login' %}">Login</a></li>
+          <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+        </ul>
+      </nav>
+    </header>
+  
+    <a href="#menu" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+    
     <h2>Log in to My Site</h2>
     {% if form.errors %}
       <p style="color: red">Your username and password didn't match. Please try again.</p>
