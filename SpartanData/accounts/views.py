@@ -15,6 +15,9 @@ from django.contrib.auth.forms import AuthenticationForm
 from .tokens import account_activation_token
 
 def home_view(request):
+    return render(request, 'login_home.html')
+
+def login_home_view(request):
     return render(request, 'home.html')
 
 def activation_sent_view(request):
@@ -72,7 +75,7 @@ def login_view(request):
             if user is not None:
                 #login(request, user)
                 #messages.info(request, f"You are now logged in as {username}")
-                return redirect('/')
+                return redirect('/home')
             else:
                 return redirect('/signup')
         else:
