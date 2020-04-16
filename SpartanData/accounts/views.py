@@ -82,3 +82,10 @@ def login_view(request):
                     template_name = 'login.html',
                     context={'form':form})
 
+def dashboard(request):
+    if request.method == 'POST':
+        uploaded_file = request.FILES['document']
+        print(uploaded_file.name)
+        print(uploaded_file.size)
+    return render(request, 'dashboard.html')
+
