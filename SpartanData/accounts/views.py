@@ -10,9 +10,13 @@ from django.utils.http import urlsafe_base64_encode
 from .tokens import account_activation_token
 from django.template.loader import render_to_string
 
+
 from .forms import SignUpForm
 from django.contrib.auth.forms import AuthenticationForm
 from .tokens import account_activation_token
+
+from .forms import UploadDataForm
+
 
 def home_view(request):
     return render(request, 'login_home.html')
@@ -87,8 +91,16 @@ def login_view(request):
 
 def dashboard(request):
     if request.method == 'POST':
-        uploaded_file = request.FILES['document']
-        print(uploaded_file.name)
-        print(uploaded_file.size)
-    return render(request, 'dashboard.html')
+        if user.profile.upload_confirmation:
+            # Need code to create dashboard values, should this be in JS? 
 
+        else: 
+            uploaded_file = request.FILES['document']
+            
+            print(uploaded_file.name)
+            print(uploaded_file.size)
+
+            # Assuming upload sucessful 
+            user.profile.upload_confirmation = True
+            user.save()
+    return render(request, 'dashboard.html')
