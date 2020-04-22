@@ -90,7 +90,7 @@ def login_view(request):
                     context={'form':form})
 
 def dashboard(request):
-    if request.method == 'POST':
+    if request.method == 'POST': #Checks for requests sent to file
         if user.profile.upload_confirmation:
             # Need code to create dashboard values, should this be in JS? 
 
