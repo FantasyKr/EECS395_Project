@@ -9,7 +9,8 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from .tokens import account_activation_token
 from django.template.loader import render_to_string
-
+from pandas.api.types import is_numeric_dtype
+import pandas as pd
 
 from .forms import SignUpForm
 from django.contrib.auth.forms import AuthenticationForm
@@ -68,7 +69,7 @@ def signup_view(request):
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
-    
+
 def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(request=request, data=request.POST)
@@ -89,18 +90,30 @@ def login_view(request):
                     template_name = 'login.html',
                     context={'form':form})
 
-def dashboard(request):
-    if request.method == 'POST': #Checks for requests sent to file
-        if user.profile.upload_confirmation:
-            # Need code to create dashboard values, should this be in JS? 
+def check_dtype(attr_index):
+    attributes = attribute_list()
+    if is_numeric_dtype(df[attributes[attr_index]]):
+        return True
+    else:
+        return False
 
-        else: 
+def dashboard(request):
+    if request.method == 'POST':
+        if user.profile.upload_confirmation:
+            # Need code to create dashboard values, should this be in JS?
+
+        else:
             uploaded_file = request.FILES['document']
-            
+            last_chars = uploaded_file[-3:]
+            if last_chars != 'csv' or uploaded_file.size < 1:
+                raise Exception('Invalid Uploaded File. Make sure it is a csv file.')
+            df = pd.read_csv(uploaded_file.name)
+            if not check_dtype(df):
+                raise Exception('Invalid Uploaded File. Make sure all data is numerical.')
             print(uploaded_file.name)
             print(uploaded_file.size)
 
-            # Assuming upload sucessful 
+            # Assuming upload sucessful
             user.profile.upload_confirmation = True
             user.save()
     return render(request, 'dashboard.html')
