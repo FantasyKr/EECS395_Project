@@ -104,14 +104,14 @@ def dashboard(request):
         #else:
             uploaded_file = request.FILES['document']
             last_chars = uploaded_file.name[-3:]
-            if last_chars != 'csv' or uploaded_file.size < 1:
-                raise Exception('Invalid Uploaded File. Make sure it is a csv file.')
-            df = pd.read_csv(uploaded_file)
-            #if not check_dtype(df):
-            #    raise Exception('Invalid Uploaded File. Make sure all data is numerical.')
-            print(uploaded_file.name)
-            print(uploaded_file.size)
-
+            try:
+                if last_chars != 'csv' or uploaded_file.size < 1:
+                    raise Exception('Invalid Uploaded File. Make sure it is a csv file.')
+                df = pd.read_csv(uploaded_file)
+                print(uploaded_file.name)
+                print(uploaded_file.size)
+            except:
+                return redirect('Invalid Uploaded File. Make sure it is a csv file.')
             # Assuming upload sucessful
             #user.profile.upload_confirmation = True
             #user.save()
