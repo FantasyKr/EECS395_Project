@@ -99,21 +99,20 @@ def check_dtype(attr_index):
 
 def dashboard(request):
     if request.method == 'POST':
-        if user.profile.upload_confirmation:
-            # Need code to create dashboard values, should this be in JS?
-
-        else:
+        #if user.profile.upload_confirmation:
+        #    print('hi')
+        #else:
             uploaded_file = request.FILES['document']
-            last_chars = uploaded_file[-3:]
+            last_chars = uploaded_file.name[-3:]
             if last_chars != 'csv' or uploaded_file.size < 1:
                 raise Exception('Invalid Uploaded File. Make sure it is a csv file.')
-            df = pd.read_csv(uploaded_file.name)
-            if not check_dtype(df):
-                raise Exception('Invalid Uploaded File. Make sure all data is numerical.')
+            df = pd.read_csv(uploaded_file)
+            #if not check_dtype(df):
+            #    raise Exception('Invalid Uploaded File. Make sure all data is numerical.')
             print(uploaded_file.name)
             print(uploaded_file.size)
 
             # Assuming upload sucessful
-            user.profile.upload_confirmation = True
-            user.save()
+            #user.profile.upload_confirmation = True
+            #user.save()
     return render(request, 'dashboard.html')

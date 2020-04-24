@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<!--
+	Spatial by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
+{% load static %}
+<html>
+	<head>
+		<title>Dashboard - SpartanData</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" type="text/css" href="{% static 'assets/css/main.css' %}" />
+	</head>
+	<body>
+
+		<!-- Header -->
+			<header id="header">
+				<h1><strong><a href="{% url 'home' %}">SpartanData</a></strong></h1>
+				<nav id="nav">
+					<ul>
+						<li><a href="{% url 'home' %}">Home</a></li>
+						<li><a href="{% url 'login' %}">Login</a></li>
+						<li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+					</ul>
+				</nav>
+			</header>
+
+			<a href="#menu" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+
+		<!-- Main -->
+			<section id="main" class="wrapper">
+				<div class="container">
+					<header class="major special">
+						
+					</header>
+
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="container">
+					<ul class="copyright">
+						<li>&copy; Untitled</li>
+						<li>Design: <a href="http://templated.co">TEMPLATED</a></li>
+						<li>Images: <a href="http://unsplash.com">Unsplash</a></li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+			<script src="{% static 'assets/js/skel.min.js' %}"></script>
+			<script src="{% static 'assets/js/util.js' %}"></script>
+			<script src="{% static 'assets/js/main.js' %}"></script>
+
+	</body>
+</html>
