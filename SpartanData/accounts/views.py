@@ -28,6 +28,14 @@ def login_home_view(request):
 def activation_sent_view(request):
     return render(request, 'activation_sent.html')
 
+def analysisChoose(request):
+    return render(request, 'analysisChoose.html')
+
+def predAnalysis(request):
+    return render(request, 'predAnalysis.html')
+
+def regAnalysis(request):
+    return render(request, 'regAnalysis.html')
 
 def activate(request, uidb64, token):
     try:
@@ -99,19 +107,20 @@ def check_dtype(attr_index):
 
 def dashboard(request):
     if request.method == 'POST':
-        #if user.profile.upload_confirmation:
-        #    print('hi')
-        #else:
-            uploaded_file = request.FILES['document']
-            last_chars = uploaded_file.name[-3:]
-            try:
-                if last_chars != 'csv' or uploaded_file.size < 1:
-                    raise Exception('Invalid Uploaded File. Make sure it is a csv file.')
-                df = pd.read_csv(uploaded_file)
-                print(uploaded_file.name)
+        uploaded_file = request.FILES['document']
+        last_chars = uploaded_file.name[-3:]
+        try:
+            if last_chars != 'csv' or uploaded_file.size < 1:
+                print(last_chars)
                 print(uploaded_file.size)
-            except:
-                return redirect('Invalid Uploaded File. Make sure it is a csv file.')
+                raise Exception('Invalid Uploaded File. Make sure it is a csv file.')
+            df = pd.read_csv(uploaded_file)
+            print(uploaded_file.name)
+            print(uploaded_file.size)
+            print(df)
+            return redirect('/analysisChoose')
+        except:
+            return redirect('/dashboard')
             # Assuming upload sucessful
             #user.profile.upload_confirmation = True
             #user.save()

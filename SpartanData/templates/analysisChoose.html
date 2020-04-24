@@ -7,7 +7,7 @@
 {% load static %}
 <html>
 	<head>
-		<title>Dashboard - SpartanData</title>
+		<title>AnalysisChoice - SpartanData</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" type="text/css" href="{% static 'assets/css/main.css' %}" />
@@ -32,16 +32,14 @@
 			<section id="main" class="wrapper">
 				<div class="container">
 					<header class="major special">
-						<h2>Dashboard</h2>
-						<p>Enter in your Data here:</p>
+						<h2>Data Analysis Selection</h2>
+						<p>Choose Which Data Analysis Method you Want:</p>
 						<br>
 						<br>
-						<form method="post" enctype="multipart/form-data">
-							{% csrf_token %}
-							<input type="file" name="document">
-							<button type="submit">Upload File</button>
-
-						</form>
+            <ul class="actions">
+    					<li><a href="{% url 'predAnalysis' %}" class="button special medium">Predictive Anaylsis</a></li>
+              <li><a href="{% url 'regAnalysis' %}" class="button special medium">Regular Anaylsis</a></li>
+    				</ul>
 					</header>
 
 		<!-- Footer -->
