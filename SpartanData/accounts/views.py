@@ -18,6 +18,8 @@ from .tokens import account_activation_token
 
 from .forms import UploadDataForm
 
+redirected = False
+
 
 def home_view(request):
     return render(request, 'login_home.html')
@@ -113,6 +115,7 @@ def dashboard(request):
             if last_chars != 'csv' or uploaded_file.size < 1:
                 print(last_chars)
                 print(uploaded_file.size)
+                redirected = True
                 raise Exception('Invalid Uploaded File. Make sure it is a csv file.')
             df = pd.read_csv(uploaded_file)
             print(uploaded_file.name)
@@ -120,8 +123,30 @@ def dashboard(request):
             print(df)
             return redirect('/analysisChoose')
         except:
-            return redirect('/dashboard')
+            return redirect('/dashboardResubmit')
             # Assuming upload sucessful
             #user.profile.upload_confirmation = True
             #user.save()
     return render(request, 'dashboard.html')
+
+def dashboardResubmit(request):
+    if request.method == 'POST':
+        uploaded_file = request.FILES['document']
+        last_chars = uploaded_file.name[-3:]
+        try:
+            if last_chars != 'csv' or uploaded_file.size < 1:
+                print(last_chars)
+                print(uploaded_file.size)
+                redirected = True
+                raise Exception('Invalid Uploaded File. Make sure it is a csv file.')
+            df = pd.read_csv(uploaded_file)
+            print(uploaded_file.name)
+            print(uploaded_file.size)
+            print(df)
+            return redirect('/analysisChoose')
+        except:
+            return redirect('/dashboardResubmit')
+            # Assuming upload sucessful
+            #user.profile.upload_confirmation = True
+            #user.save()
+    return render(request, 'dashboardResubmit.html')

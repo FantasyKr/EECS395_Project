@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
-from accounts.views import home_view, login_home_view, signup_view, login_view, activation_sent_view, activate, dashboard, analysisChoose, predAnalysis, regAnalysis
+from accounts.views import home_view, login_home_view, signup_view, login_view, activation_sent_view, activate, dashboard, analysisChoose, predAnalysis, regAnalysis, dashboardResubmit
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,6 +28,7 @@ urlpatterns = [
     path('login/', login_view, name = "login"),
     path('dashboard/', dashboard, name="dashboard"),
     path('analysisChoose/', analysisChoose, name="analysisChoose"),
-    path("predAnalysis/", predAnalysis, name="predAnalysis"),
-    path("regAnalysis/", regAnalysis, name="regAnalysis"),
+    path('predAnalysis/', predAnalysis, name="predAnalysis"),
+    path('regAnalysis/', regAnalysis, name="regAnalysis"),
+    path('dashboardResubmit/', dashboardResubmit, name="dashboardResubmit"),
 ]
