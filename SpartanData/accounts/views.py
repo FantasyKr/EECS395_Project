@@ -11,15 +11,12 @@ from .tokens import account_activation_token
 from django.template.loader import render_to_string
 from pandas.api.types import is_numeric_dtype
 import pandas as pd
-
+from ../../AnalysisCode/RegAnalysis import attribute_list
 from .forms import SignUpForm
 from django.contrib.auth.forms import AuthenticationForm
 from .tokens import account_activation_token
 
 from .forms import UploadDataForm
-
-redirected = False
-
 
 def home_view(request):
     return render(request, 'login_home.html')
@@ -37,6 +34,10 @@ def predAnalysis(request):
     return render(request, 'predAnalysis.html')
 
 def regAnalysis(request):
+    attributes = request.sessions.get('attributes')
+    context = {
+        'attributes': attributes,
+    }
     return render(request, 'regAnalysis.html')
 
 def activate(request, uidb64, token):
@@ -100,13 +101,6 @@ def login_view(request):
                     template_name = 'login.html',
                     context={'form':form})
 
-def check_dtype(attr_index):
-    attributes = attribute_list()
-    if is_numeric_dtype(df[attributes[attr_index]]):
-        return True
-    else:
-        return False
-
 def dashboard(request):
     if request.method == 'POST':
         uploaded_file = request.FILES['document']
@@ -118,9 +112,11 @@ def dashboard(request):
                 redirected = True
                 raise Exception('Invalid Uploaded File. Make sure it is a csv file.')
             df = pd.read_csv(uploaded_file)
+            attributes = attribute_list(df)
+            request.sessions['df'] = df
+            request.sessions['attributes'] = attributes
             print(uploaded_file.name)
             print(uploaded_file.size)
-            print(df)
             return redirect('/analysisChoose')
         except:
             return redirect('/dashboardResubmit')
@@ -137,9 +133,11 @@ def dashboardResubmit(request):
             if last_chars != 'csv' or uploaded_file.size < 1:
                 print(last_chars)
                 print(uploaded_file.size)
-                redirected = True
                 raise Exception('Invalid Uploaded File. Make sure it is a csv file.')
             df = pd.read_csv(uploaded_file)
+            attributes = attribute_list(df)
+            request.sessions['df'] = df
+            request.sessions['attributes'] = attributes
             print(uploaded_file.name)
             print(uploaded_file.size)
             print(df)
