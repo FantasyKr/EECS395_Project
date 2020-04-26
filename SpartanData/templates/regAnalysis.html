@@ -37,9 +37,7 @@
 						<br>
 						<label class="dropdown">
 
-							<div class="dd-button">
-							  Dropdown
-							</div>
+							<div class="dd-button">Dropdown</div>
 						  
 							<input type="checkbox" class="dd-input" id="test">
 							
@@ -65,8 +63,55 @@
 						<button type="button">Mode</button>
 						<br>
 						<br>
-						<button id="generate_graph">Generate Graph</button><!--Need to create popup-->
 						
+						<!-- Trigger/Open The Modal -->
+						<button id="myLineBtn">Generate Line Graph</button>
+
+							<!-- The Modal -->
+							<div id="myLineModal" class="modal">
+								<div class="modal-content">
+									<span class="closeLine">x</span>
+									<button type="button">Line Stuff </button>
+								</div>
+							</div>
+							<br>
+						<button id="myBarBtn">Generate Bar Graph</button>
+						
+							<!-- The Modal -->
+							<div id="myBarModal" class="modal">
+								<div class="modal-content">
+								<span class="closeBar">x</span>
+								<button type="button">Bar Stuff </button>
+							</div>
+
+						</div>
+						<br>
+						<button id="myDonutBtn">Generate Donut Chart</button>
+						
+						<!-- The Modal -->
+						<div id="myDonutModal" class="modal">
+
+						<!-- Modal content -->
+						<div class="modal-content">
+							<span class="closeDonut">x</span>
+							<button type="button">Donut Stuff </button>
+						</div>
+
+						</div>
+						<br>
+						<button id="myScatterBtn">Generate SCatter Chart</button>
+						
+						<!-- The Modal -->
+						<div id="myScatterModal" class="modal">
+
+						<!-- Modal content -->
+						<div class="modal-content">
+							<span class="closeScatter">x</span>
+							<button type="button">SCatter Stuff </button>
+						</div>
+
+						</div>
+
 					</header>
 
 					<!-- Footer -->
@@ -87,6 +132,10 @@
 			<script src="{% static 'assets/js/main.js' %}"></script>
 			<script src="{% static 'assets/js/graphs.js' %}"></script>
 			<script src="{% static 'assets/js/multirange.js' %}"></script>
+			<script src="{% static 'assets/js/linemodal.js' %}"></script>
+			<script src="{% static 'assets/js/barmodal.js' %}"></script>
+			<script src="{% static 'assets/js/donutmodal.js' %}"></script>
+			<script scr="{% static 'assets/js/scattermodal.js' %}"></script>
 
 	</body>
 </html>
