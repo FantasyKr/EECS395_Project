@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[39]:
+# In[1]:
 
 
 import pandas as pd
@@ -9,32 +9,25 @@ from pandas.api.types import is_numeric_dtype
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-
 sns.set(style="darkgrid")
 
 
-# In[40]:
+# This method returns a list of attributes from the dataframe.
+
+# In[ ]:
 
 
-#df = pd.read_csv(uploaded_file)
-
-
-# This method returns a list of attributes from the dataset.
-
-# In[51]:
-
-
-def attribute_list():
+def attribute_list(df):
     return list(df)
 
 
 # This is a helper method for checking attribute data types.
 
-# In[52]:
+# In[ ]:
 
 
-def check_dtype(attr_index):
-    attributes = attribute_list()
+def check_dtype(df, attr_index):
+    attributes = attribute_list(df)
     if is_numeric_dtype(df[attributes[attr_index]]):
         return True
     else:
@@ -43,11 +36,11 @@ def check_dtype(attr_index):
 
 # This method will output the average and standard deviation over a selected attribute, given an attribute with an appropriate data type.
 
-# In[43]:
+# In[ ]:
 
 
-def mean(attr_index):
-    attributes = attribute_list()
+def mean(df, attr_index):
+    attributes = attribute_list(df)
     if check_dtype(attr_index):
         mean_val = df[attributes[attr_index]].mean(skipna = True)
         std_val = df[attributes[attr_index]].std(skipna = True)
@@ -58,11 +51,11 @@ def mean(attr_index):
 
 # This method will output the median over a selected attribute, given an attribute with an appropriate data type.
 
-# In[44]:
+# In[ ]:
 
 
-def median(attr_index):
-    attributes = attribute_list()
+def median(df, attr_index):
+    attributes = attribute_list(df)
     if check_dtype(attr_index):
         median_val = df[attributes[attr_index]].median(skipna = True)
         return 'The calculated median over the %s attribute is %s.' % (attributes[attr_index], median_val)
@@ -72,11 +65,11 @@ def median(attr_index):
 
 # This method will output the mode over a selected attribute, given an attribute with an appropriate data type.
 
-# In[45]:
+# In[ ]:
 
 
-def mode(attr_index):
-    attributes = attribute_list()
+def mode(df, attr_index):
+    attributes = attribute_list(df)
     modes = df[attributes[attr_index]].mode(dropna = True).values
     if modes.size > 1:
         return 'The calculated modes over the %s attribute are %s.' % (attributes[attr_index], str(modes)[1:-1])
@@ -86,11 +79,11 @@ def mode(attr_index):
 
 # This method will output the min and max over a selected attribute, given an attribute with an appropriate data type.
 
-# In[46]:
+# In[ ]:
 
 
-def minmax(attr_index):
-    attributes = attribute_list()
+def minmax(df, attr_index):
+    attributes = attribute_list(df)
     if check_dtype(attr_index):
         min_val = df[attributes[attr_index]].min(skipna = True)
         max_val = df[attributes[attr_index]].max(skipna = True)
@@ -101,35 +94,21 @@ def minmax(attr_index):
 
 # This method will output a general description of statistical values.
 
-# In[47]:
+# In[ ]:
 
 
-def desc_data():
-    include =['object', 'float', 'int']
+def desc_data(df):
+    include = ['object', 'float', 'int']
     return df.describe(include = include)
 
 
 # This will output rows within specified percentiles, given an attribute with an appropriate data type.
 
-# def perc(min, max, attr_index):
-#     if min < 1 and max < 1 and min < max:
-#         if check_dtype(attr_index):
-#             val = df[attributes[attr_index]].values
-#             q1 = np.quantile(val, q = min)
-#             q2 = np.quantile(val, q = max)
-#             mask = ((q1 < val) & (val < q2)).all(0)
-#             return df[mask]
-#         else:
-#             return 'Percentiles cannot be calculated due to inappropriate data type.'
-#     else:
-#         return 'Percentiles out of range.'
-# perc(.35,.75,0)
-
-# In[48]:
+# In[ ]:
 
 
-def interval(low_perc, high_perc, attr_index):
-    attributes = attribute_list()
+def interval(df, low_perc, high_perc, attr_index):
+    attributes = attribute_list(df)
     if check_dtype(attr_index) and type(low_perc) == int and type(high_perc) == int:
         if(low_perc < high_perc and low_perc >= 0 and high_perc <= 100):
             df_sort = df.sort_values(by=[attributes[attr_index]])
@@ -140,3 +119,14 @@ def interval(low_perc, high_perc, attr_index):
             print('Please enter valid percentile values.')
     else:
         print('Dese not numbas.')
+
+
+# def line_plot(df, x_index, y_index):
+#     df1 = df.iloc[:,[x_index, y_index]]
+#     return df1
+# df = pd.read_csv('fortune500.csv')
+# db = line_plot(df, 1, 3)
+
+# db['tuple']=list(zip(df.iloc[:,0],df.iloc[:,1]))
+
+# db['tuple'].to_json('test.json',orient='values')

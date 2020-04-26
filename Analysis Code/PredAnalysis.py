@@ -1,3 +1,9 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[ ]:
+
+
 import pandas as pd
 from pandas.api.types import is_numeric_dtype
 import numpy as np
@@ -16,6 +22,10 @@ sns.set(style="darkgrid")
 
 
 # This prep method should be run on a dataset before any model.
+
+# In[ ]:
+
+
 def data_prep(df):
     df = df.fillna(value=0)
     replace_values = {'negative':0, 'positive':1, 'f':0, 't':1}
@@ -24,8 +34,15 @@ def data_prep(df):
 
 
 # This method returns a list of attributes from the dataframe.
+
+# In[ ]:
+
+
 def attribute_list(df):
     return list(df)
+
+
+# In[ ]:
 
 
 # Example code for running a model:
@@ -36,12 +53,11 @@ def attribute_list(df):
 # rand_forest(df, 17, feature_list)
 
 
-# This method receives a dataframe, the index of the attribute
-# we are predicting, and a list of indices of features we want
-# to train the model on. These indices are based off of the list
-# produced by attribute_list(). A random forest model is then
-# used to train and label the data. The method returns two metric
-# values (accuracy and ROC AUC score) and a confusion matrix.
+# This method receives a dataframe, the index of the attribute we are predicting, and a list of indices of features we want to train the model on. These indices are based off of the list produced by attribute_list(). A random forest model is then used to train and label the data. The method returns two metric values (accuracy and ROC AUC score) and a confusion matrix.
+
+# In[ ]:
+
+
 def rand_forest(df, pred_attr_index, feature_list):
     X = df.iloc[:,feature_list]
     y = df.iloc[:,pred_attr_index]
@@ -65,12 +81,11 @@ def rand_forest(df, pred_attr_index, feature_list):
         print(title)
 
 
-# This method receives a dataframe, the index of the attribute
-# we are predicting, and a list of indices of features we want
-# to train the model on. These indices are based off of the list
-# produced by attribute_list(). A K Nearest Neighbors clustering
-# model is then used to train and label the data. The method returns
-# two metric values (accuracy and ROC AUC score) and a confusion matrix.
+# This method receives a dataframe, the index of the attribute we are predicting, and a list of indices of features we want to train the model on. These indices are based off of the list produced by attribute_list(). A K Nearest Neighbors clustering model is then used to train and label the data. The method returns two metric values (accuracy and ROC AUC score) and a confusion matrix.
+
+# In[ ]:
+
+
 def k_neighbors(df, pred_attr_index, feature_list):
     X = df.iloc[:,feature_list]
     y = df.iloc[:,pred_attr_index]
@@ -95,12 +110,11 @@ def k_neighbors(df, pred_attr_index, feature_list):
         print(title)
 
 
-# This method receives a dataframe, the index of the attribute
-# we are predicting, and a list of indices of features we want
-# to train the model on. These indices are based off of the list
-# produced by attribute_list(). A Gaussian Naive Bayes model is
-# then used to train and label the data. The method returns two
-# metric values (accuracy and ROC AUC score) and a confusion matrix.
+# This method receives a dataframe, the index of the attribute we are predicting, and a list of indices of features we want to train the model on. These indices are based off of the list produced by attribute_list(). A Gaussian Naive Bayes model is then used to train and label the data. The method returns two metric values (accuracy and ROC AUC score) and a confusion matrix.
+
+# In[ ]:
+
+
 def naive_bayes(df, pred_attr_index, feature_list):
     X = df.iloc[:,feature_list]
     y = df.iloc[:,pred_attr_index]
