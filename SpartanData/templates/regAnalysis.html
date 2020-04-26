@@ -11,8 +11,56 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" type="text/css" href="{% static 'assets/css/main.css' %}" />
-		<!-- comment <link rel="slider_stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"> -->
 	</head>
+
+	<style>
+		.dropbtn {
+		  background-color: #323037;
+		  border-radius: 4px;
+		  color: #ffffff !important;
+		  border: 0;
+		  cursor: pointer;
+		  display: inline-block;
+		  font-weight: 700;
+		  height: 3.15em;
+		  line-height: 3.25em;
+		  padding: 0 2.2em;
+		  text-align: center;
+		  text-decoration: none;
+		  text-transform: uppercase;
+		  white-space: nowrap;
+		}
+		
+		.dropbtn:hover, .dropbtn:focus {
+			background-color: #3e3c45;
+		}
+		
+		.dropdown {
+		  position: relative;
+		  display: inline-block;
+		}
+		
+		.dropdown-content {
+		  display: none;
+		  position: absolute;
+		  background-color: #f1f1f1;
+		  min-width: 160px;
+		  overflow: auto;
+		  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+		  z-index: 1;
+		}
+		
+		.dropdown-content a {
+		  color: black;
+		  padding: 12px 16px;
+		  text-decoration: none;
+		  display: block;
+		}
+		
+		.dropdown a:hover {background-color: #ddd;}
+		
+		.show {display: block;}
+		</style>
 	<body>
 
 		<!-- Header -->
@@ -34,17 +82,24 @@
 				<div class="container">
 					<header class="major special">
 						<h3>Attribute Selection</h3>
-						<div data-role="rangeslider">
+						<br>
+						<div class="dropdown">
+							<button onclick="dropdown()" class="dropbtn">Dropdown</button>
+							<div id="myDropdown" class="dropdown-content">
+							  <a href="#">Attribute1</a>
+							  <a href="#">Attribute2</a>
+							  <a href="#">Attribute3</a>
+							</div>
+						  </div>
+						<br>
+						<br>
+						<h3> Select Range</h3>
+						<div data-role="slider">
 							<label for="Lower-bound">Lower Bound:</label>
 								<input type="range" name="Lower-bound" id="Lower-Bound" value="0" min="0" max="100">
 							<label for="Upper-bound">Upper Bound:</label>
 								<input type="range" name="Upper-Bound" id="Upper-Bound" value="100" min="0" max="100">
      					 </div>
-        				<input type="submit" data-inline="true" value="Submit">
-						<br> <!-- Insert dropdown here-->
-						<br>
-						<h3> Select Range</h3>
-						<br> <!-- Insert slider here-->
 						<br>
 						<button type="button">Mean</button>
 						<br>
@@ -76,7 +131,27 @@
 			<script src="{% static 'assets/js/main.js' %}"></script>
 			<script src="{% static 'assets/js/graphs.js' %}"></script>
 			<script src="{% static 'assets/js/components.js' %}"></script>
-			<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  			<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+			<script>
+				/* When the user clicks on the button, 
+				toggle between hiding and showing the dropdown content */
+				function dropdown() {
+				  document.getElementById("myDropdown").classList.toggle("show");
+				}
+				
+				// Close the dropdown if the user clicks outside of it
+				window.onclick = function(event) {
+				  if (!event.target.matches('.dropbtn')) {
+					var dropdowns = document.getElementsByClassName("dropdown-content");
+					var i;
+					for (i = 0; i < dropdowns.length; i++) {
+					  var openDropdown = dropdowns[i];
+					  if (openDropdown.classList.contains('show')) {
+						openDropdown.classList.remove('show');
+					  }
+					}
+				  }
+				}
+				</script>
 	</body>
 </html>
