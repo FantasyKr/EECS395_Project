@@ -11,6 +11,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" type="text/css" href="{% static 'assets/css/main.css' %}" />
+		<!-- comment <link rel="slider_stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"> -->
 	</head>
 	<body>
 
@@ -32,10 +33,32 @@
 			<section id="main" class="wrapper">
 				<div class="container">
 					<header class="major special">
-						
+						<h3>Attribute Selection</h3>
+						<div data-role="rangeslider">
+							<label for="Lower-bound">Lower Bound:</label>
+								<input type="range" name="Lower-bound" id="Lower-Bound" value="0" min="0" max="100">
+							<label for="Upper-bound">Upper Bound:</label>
+								<input type="range" name="price-max" id="price-max" value="100" min="0" max="100">
+     					 </div>
+        				<input type="submit" data-inline="true" value="Submit">
+						<br> <!-- Insert dropdown here-->
+						<br>
+						<h3> Select Range</h3>
+						<br> <!-- Insert slider here-->
+						<br>
+						<button type="button">Mean</button>
+						<br>
+						<br>
+						<button type="button">Median</button>
+						<br>
+						<br>
+						<button type="button">Mode</button>
+						<br>
+						<br>
+						<button id="generate_graph">Generate Graph</button><!--Need to create popup-->
 					</header>
-
-		<!-- Footer -->
+		
+					<!-- Footer -->
 			<footer id="footer">
 				<div class="container">
 					<ul class="copyright">
@@ -51,6 +74,9 @@
 			<script src="{% static 'assets/js/skel.min.js' %}"></script>
 			<script src="{% static 'assets/js/util.js' %}"></script>
 			<script src="{% static 'assets/js/main.js' %}"></script>
-
+			<script src="{% static 'assets/js/graphs.js' %}"></script>
+			<script src="{% static 'assets/js/components.js' %}"></script>
+			<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  			<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	</body>
 </html>
