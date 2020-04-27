@@ -1,3 +1,4 @@
+
 (function() {
 
 var modal = document.getElementById('myLineModal');
@@ -6,7 +7,7 @@ var modal = document.getElementById('myLineModal');
 var btn = document.getElementById("myLineBtn");
 
 // Get the <span> element that closes the modal
-var span = document.getElementsByClassName("closeLine")[0];
+var span = document.getElementsByClassName("close")[0];
 
 // When the user clicks on the button, open the modal
 btn.onclick = function() {

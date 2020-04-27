@@ -11,7 +11,6 @@ $( document ).ready(function() {
             dataPoints.push({y: value[0], label: value[1]});
          });	
          barchart(dataPoints, dataPointstrue, "light2", "NEWB", "yBitch");
-         //chart.render();
       }); 
    });
    $("#DonutPlot").click(function(){
@@ -21,7 +20,6 @@ $( document ).ready(function() {
             dataPoints.push({y: value[0], label: value[1]});
          });	
          donutchart(dataPoints, true, "light2", "NEWB");
-         chart.render();
       });
   });
  
@@ -43,7 +41,6 @@ $( document ).ready(function() {
             dataPoints.push({x: value[0], y: parseInt(value[1])});
          });	
          linechart(dataPoints, true, "dark1", "NEWB", "suck", "that") ;
-         chart.render();
       });
    });
 });

@@ -35,21 +35,12 @@
 					<header class="major special">
 						<h3>Attribute Selection</h3>
 						<br>
-						<label class="dropdown">
-
-							<div class="dd-button">
-							  Dropdown
-							</div>
-							<input type="checkbox" class="dd-input" id="test">
-
-							<ul class="dd-menu">
-							  <li>Action</li>
-							  <li>Another action</li>
-							  <li>Something else here</li>
-							  <li class="divider"></li>
-							</ul>
-
-						  </label>
+						<select id="attributeSel" name="attributeSelection" form="attributeform">
+							<option value="attr1">Light 1</option>
+							<option value="light2">Light 2</option>
+							<option value="dark1">Dark 1</option>
+							<option value="dark2">Dark 2</option>
+						</select>
 						<br>
 						<h3> Select Range</h3>
 						<br>
@@ -72,47 +63,132 @@
 						<!-- Trigger/Open The Modal -->
 						<button id="myLineBtn">Generate Line Graph</button>
 
-							<!-- The Modal -->
-							<div id="myLineModal" class="modal">
+							<!-- The Line Modal -->
+							<div id="myLineModal" class="modal"> 
 								<div class="modal-content">
-									<span class="closeLine">x</span>
-									<button type="button">Line Stuff </button>
+									<div class="modal-header">
+										<span class="close">&times;</span>
+										<h2>Line Graph</h2>
+									</div>
+									<div class="modal-body">
+										<form action="/action_page.php" method="get">
+											<input type="text" placeholder = "title" name="Title" size="1"/>
+											<input type="text" placeholder = "x-axis title" name="XAxisTitle" size="1"/>
+											<input type="text" placeholder = "y axis title" name="YAxisTitle" size="1"/>
+											<select id="theme" name="Themes" form="themeform">
+												<option value="light1">Light 1</option>
+												<option value="light2">Light 2</option>
+												<option value="dark1">Dark 1</option>
+												<option value="dark2">Dark 2</option>
+											</select>
+											<label class="switch switch-slide">
+												<input class="switch-input" type="checkbox" />
+												<span class="switch-label" data-on="Interactive" data-off="Not Interactive"></span> 
+												<span class="switch-handle"></span>
+											</label>
+											<br>
+											<input type="submit" class="btn" value="Create Graph" name="mybtn">
+										</form>
+									</div>					
 								</div>
 							</div>
 							<br>
 						<button id="myBarBtn">Generate Bar Graph</button>
-
-							<!-- The Modal -->
+						
+								<!-- The Bar Modal -->
 							<div id="myBarModal" class="modal">
-								<div class="modal-content">
-								<span class="closeBar">x</span>
-								<button type="button">Bar Stuff </button>
-							</div>
+								<div class="modal-content"> 
+									<div class="modal-header">
+										<span class="close">&times;</span>
+										<h2>Line Graph</h2>
+									</div>
+									<div class="modal-body">
+										<form action="/action_page.php" method="get">
+											<input type="text" placeholder = "title" name="Title" size="1"/>
+											<input type="text" placeholder = "y axis title" name="YAxisTitle" size="1"/>
+											<select id="theme" name="Themes" form="themeform">
+												<option value="light1">Light 1</option>
+												<option value="light2">Light 2</option>
+												<option value="dark1">Dark 1</option>
+												<option value="dark2">Dark 2</option>
+											</select>
+											<label class="switch switch-slide">
+												<input class="switch-input" type="checkbox" />
+												<span class="switch-label" data-on="Interactive" data-off="Not Interactive"></span> 
+												<span class="switch-handle"></span>
+											</label>
+											<br>
+											<input type="submit" class="btn" value="Create Graph" name="mybtn">
+										</form>
+									</div>			
+								</div>
 
-						</div>
+							</div>
 						<br>
 						<button id="myDonutBtn">Generate Donut Chart</button>
-
-						<!-- The Modal -->
+						
+						<!-- The Donut Modal -->
 						<div id="myDonutModal" class="modal">
 
 						<!-- Modal content -->
 						<div class="modal-content">
-							<span class="closeDonut">x</span>
-							<button type="button">Donut Stuff </button>
+							<div class="modal-header">
+								<span class="close">&times;</span>
+								<h2>Line Graph</h2>
+							</div>
+							<div class="modal-body">
+								<form action="/action_page.php" method="get">
+									<input type="text" placeholder = "title" name="Title" size="1"/>
+									<select id="theme" name="Themes" form="themeform">
+										<option value="light1">Light 1</option>
+										<option value="light2">Light 2</option>
+										<option value="dark1">Dark 1</option>
+										<option value="dark2">Dark 2</option>
+									</select>
+									<label class="switch switch-slide">
+										<input class="switch-input" type="checkbox" />
+										<span class="switch-label" data-on="Interactive" data-off="Not Interactive"></span> 
+										<span class="switch-handle"></span>
+									</label>
+									<br>
+									<input type="submit" class="btn" value="Create Graph" name="mybtn">
+								</form>
+							</div>			
 						</div>
 
 						</div>
 						<br>
-						<button id="myScatterBtn">Generate SCatter Chart</button>
-
-						<!-- The Modal -->
+						<button id="myScatterBtn">Generate Scatter Chart</button>
+						
+						<!-- The Scatter Modal -->
 						<div id="myScatterModal" class="modal">
 
 						<!-- Modal content -->
 						<div class="modal-content">
-							<span class="closeScatter">x</span>
-							<button type="button">SCatter Stuff </button>
+							<div class="modal-header">
+								<span class="close">&times;</span>
+								<h2>Line Graph</h2>
+							</div>
+							<div class="modal-body">
+								<form action="/action_page.php" method="get">
+									<input type="text" placeholder = "title" name="Title" size="1"/>
+									<input type="text" placeholder = "x-axis title" name="XAxisTitle" size="1"/>
+									<input type="text" placeholder = "y axis title" name="YAxisTitle" size="1"/>
+									<select id="theme" name="Themes" form="themeform">
+										<option value="light1">Light 1</option>
+										<option value="light2">Light 2</option>
+										<option value="dark1">Dark 1</option>
+										<option value="dark2">Dark 2</option>
+									</select>
+									<label class="switch switch-slide">
+										<input class="switch-input" type="checkbox" />
+										<span class="switch-label" data-on="Interactive" data-off="Not Interactive"></span> 
+										<span class="switch-handle"></span>
+									</label>
+									<br>
+									<input type="submit" class="btn" value="Create Graph" name="mybtn">
+								</form>
+							</div>			>
 						</div>
 
 						</div>
