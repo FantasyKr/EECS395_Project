@@ -20,6 +20,9 @@ from django.http import HttpResponse
 
 from .forms import UploadDataForm
 
+GLOBAL_df = None
+GLOBAL_attributes = None
+
 def home_view(request):
     return render(request, 'login_home.html')
 
@@ -40,11 +43,13 @@ def predAnalysis(request):
     return render(request, 'predAnalysis.html')
 
 def regAnalysis(request):
-    #attributes = request.sessions.get('attributes')
-    #context = {
-    #    'attributes': attributes,
-    #}
-    return render(request, 'regAnalysis.html')
+    global GLOBAL_df, GLOBAL_attributes
+    attributes = GLOBAL_attributes
+    print(attributes)
+    context = {
+        'attributes': attributes,
+    }
+    return render(request, 'regAnalysis.html', context)
 
 def signup_view(request):
     if request.method  == 'POST':
@@ -113,6 +118,7 @@ def login_view(request):
                     context={'form':form})
 
 def dashboard(request):
+    global GLOBAL_df, GLOBAL_attributes
     if request.method == 'POST':
         uploaded_file = request.FILES['document']
         last_chars = uploaded_file.name[-3:]
@@ -124,8 +130,9 @@ def dashboard(request):
                 raise Exception('Invalid Uploaded File. Make sure it is a csv file.')
             df = pd.read_csv(uploaded_file)
             attributes = attribute_list(df)
-            request.sessions['df'] = df
-            request.sessions['attributes'] = attributes
+            GLOBAL_attributes = attributes
+            #request.sessions['df'] = df
+            #request.sessions['attributes'] = attributes
             print(uploaded_file.name)
             print(uploaded_file.size)
             return redirect('/analysisChoose')
@@ -137,6 +144,7 @@ def dashboard(request):
     return render(request, 'dashboard.html')
 
 def dashboardResubmit(request):
+    global GLOBAL_df, GLOBAL_attributes
     if request.method == 'POST':
         uploaded_file = request.FILES['document']
         last_chars = uploaded_file.name[-3:]
@@ -147,8 +155,9 @@ def dashboardResubmit(request):
                 raise Exception('Invalid Uploaded File. Make sure it is a csv file.')
             df = pd.read_csv(uploaded_file)
             attributes = attribute_list(df)
-            request.sessions['df'] = df
-            request.sessions['attributes'] = attributes
+            GLOBAL_attributes = attributes
+            #request.sessions['df'] = df
+            #request.sessions['attributes'] = attributes
             print(uploaded_file.name)
             print(uploaded_file.size)
             print(df)
