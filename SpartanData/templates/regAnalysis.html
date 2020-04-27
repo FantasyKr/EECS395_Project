@@ -54,7 +54,22 @@
 						<h3> {{ mode }} </h3>
 						<br>
 						<!-- Trigger/Open The Modal -->
-						<button id="myLineBtn">Generate Line Graph</button>
+						<button id="myMasterBtn">Create Graph</button>
+							<div id="myMasterModal" class="modal"> 
+								<div class="modal-content">
+									<div class="modal-header">
+										<span class="close" id="closeMaster">&times;</span>
+										<h2>Choose Graph type</h2>
+									</div>
+									<div class="modal-body">
+										<button id="myBarBtn">Bar Graph</button>
+										<button id="myLineBtn">Line Graph</button>
+										<button id="myDonutBtn">Donut Chart</button>
+										<button id="myScatterBtn">Scatter Chart</button>
+									</div>
+								</div>
+							</div>
+						
 
 							<!-- The Line Modal -->
 							<div id="myLineModal" class="modal"> 
@@ -86,7 +101,7 @@
 								</div>
 							</div>
 
-						<button id="myBarBtn">Generate Bar Graph</button>
+						
 						
 							<!-- The Bar Modal -->
 							<div id="myBarModal" class="modal">
@@ -116,8 +131,6 @@
 									</div>			
 								</div>
 							</div>
-
-						<button id="myDonutBtn">Generate Donut Chart</button>
 						
 							<!-- The Donut Modal -->
 							<div id="myDonutModal" class="modal">
@@ -148,8 +161,6 @@
 									</div>			
 								</div>
 							</div>
-
-						<button id="myScatterBtn">Generate Scatter Chart</button>
 						
 						<!-- The Scatter Modal -->
 							<div id="myScatterModal" class="modal">
