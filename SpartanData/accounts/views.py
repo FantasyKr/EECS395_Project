@@ -11,7 +11,7 @@ from .tokens import account_activation_token
 from django.template.loader import render_to_string
 from pandas.api.types import is_numeric_dtype
 import pandas as pd
-from accounts import RegAnalysis
+from .RegAnalysis import attribute_list, mean, median, mode
 from .forms import SignUpForm
 from django.contrib.auth.forms import AuthenticationForm
 from .tokens import account_activation_token
@@ -44,22 +44,33 @@ def predAnalysis(request):
 def regAnalysis(request):
     global GLOBAL_df, GLOBAL_attributes
     attributes = GLOBAL_attributes
+    index = 0
+    mean = 0
+    median = 0
+    mode = 0
+    minRange = 0
+    maxRange = 100
     print(attributes)
-    context = {
-        'attributes': attributes,
-    }
-    return render(request, 'regAnalysis.html', context)
 
+    
     if(request.GET.get('meanbtn')):
-       RegAnalysis.mean(df,index)
+        mean = RegAnalysis.mean(GLOBAL_df,index)
 
     if(request.GET.get('modebtn')):
-        RegAnalysis.mode(df,index)
+        mode = RegAnalysis.mode(GLOBAL_df,index)
 
     if(request.GET.get('medianbtn')):
-        RegAnalysis.median(df,index)
-
-    return render(request, 'regAnalysis.html')
+        median = RegAnalysis.median(GLOBAL_df,index)
+    
+    context = {
+        'attributes': attributes,
+        'mean': mean,
+        'mode': mode, 
+        'median': median,
+        'minRange': minRange, 
+        'maxRange': maxRange,
+    }
+    return render(request, 'regAnalysis.html' , context)
 
 def signup_view(request):
     if request.method  == 'POST':
