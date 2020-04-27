@@ -15,11 +15,17 @@ from .RegAnalysis import attribute_list
 from .forms import SignUpForm
 from django.contrib.auth.forms import AuthenticationForm
 from .tokens import account_activation_token
+from django.core.mail import EmailMessage
+from django.http import HttpResponse
 
 from .forms import UploadDataForm
 
 def home_view(request):
     return render(request, 'login_home.html')
+
+def activated_view(request):
+    return render(request, 'activated.html')
+
 
 def login_home_view(request):
     return render(request, 'home.html')
@@ -40,22 +46,6 @@ def regAnalysis(request):
     }
     return render(request, 'regAnalysis.html')
 
-def activate(request, uidb64, token):
-    try:
-        uid = force_text(urlsafe_base64_decode(uidb64))
-        user = User.objects.get(pk=uid)
-    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-        user = None
-
-    if user is not None and account_activation_token.check_token(user, token):
-        user.is_active = True
-        user.profile.signup_confirmation = True
-        user.save()
-        login(request, user)
-        return redirect('/login')
-    else:
-        return render(request, 'activation_invalid.html')
-
 def signup_view(request):
     if request.method  == 'POST':
         form = SignUpForm(request.POST)
@@ -68,6 +58,7 @@ def signup_view(request):
             user.is_active = False
             user.save()
             current_site = get_current_site(request)
+            mail_subject = 'Activate your SpartanData account.'
             subject = 'Please Activate Your Account'
             message = render_to_string('activation_request.html', {
                 'user': user,
@@ -75,11 +66,31 @@ def signup_view(request):
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': account_activation_token.make_token(user),
             })
+            to_email = form.cleaned_data.get('email')
+            email = EmailMessage(
+                        mail_subject, message, to=[to_email]
+            )
+            email.send()
+            return redirect('/sent')
             user.email_user(subject, message)
             return redirect('activation_sent')
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
+
+def activate(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        login_view(request)
+        return redirect('/activated')
+    else:
+        return HttpResponse('Activation link is invalid!')
 
 def login_view(request):
     if request.method == 'POST':
