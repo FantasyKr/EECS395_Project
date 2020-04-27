@@ -41,9 +41,9 @@ def predAnalysis(request):
 
 def regAnalysis(request):
     #attributes = request.sessions.get('attributes')
-    context = {
-        'attributes': attributes,
-    }
+    #context = {
+    #    'attributes': attributes,
+    #}
     return render(request, 'regAnalysis.html')
 
 def signup_view(request):
