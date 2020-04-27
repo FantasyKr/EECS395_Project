@@ -11,7 +11,7 @@ from .tokens import account_activation_token
 from django.template.loader import render_to_string
 from pandas.api.types import is_numeric_dtype
 import pandas as pd
-from ../../AnalysisCode/RegAnalysis import attribute_list
+from .RegAnalysis import attribute_list
 from .forms import SignUpForm
 from django.contrib.auth.forms import AuthenticationForm
 from .tokens import account_activation_token
