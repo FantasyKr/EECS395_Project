@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
 import pandas as pd
 from pandas.api.types import is_numeric_dtype
 import numpy as np
@@ -13,19 +7,11 @@ sns.set(style="darkgrid")
 
 
 # This method returns a list of attributes from the dataframe.
-
-# In[ ]:
-
-
 def attribute_list(df):
     return list(df)
 
 
 # This is a helper method for checking attribute data types.
-
-# In[ ]:
-
-
 def check_dtype(df, attr_index):
     attributes = attribute_list(df)
     if is_numeric_dtype(df[attributes[attr_index]]):
@@ -34,11 +20,8 @@ def check_dtype(df, attr_index):
         return False
 
 
-# This method will output the average and standard deviation over a selected attribute, given an attribute with an appropriate data type.
-
-# In[ ]:
-
-
+# This method will output the average and standard deviation
+# over a selected attribute, given an attribute with an appropriate data type.
 def mean(df, attr_index):
     attributes = attribute_list(df)
     if check_dtype(attr_index):
@@ -49,11 +32,8 @@ def mean(df, attr_index):
         return 'A mean value cannot be calculated due to inappropriate data type.'
 
 
-# This method will output the median over a selected attribute, given an attribute with an appropriate data type.
-
-# In[ ]:
-
-
+# This method will output the median over a selected attribute,
+# given an attribute with an appropriate data type.
 def median(df, attr_index):
     attributes = attribute_list(df)
     if check_dtype(attr_index):
@@ -63,11 +43,8 @@ def median(df, attr_index):
         return 'A median value cannot be calculated due to inappropriate data type.'
 
 
-# This method will output the mode over a selected attribute, given an attribute with an appropriate data type.
-
-# In[ ]:
-
-
+# This method will output the mode over a selected attribute,
+# given an attribute with an appropriate data type.
 def mode(df, attr_index):
     attributes = attribute_list(df)
     modes = df[attributes[attr_index]].mode(dropna = True).values
@@ -77,11 +54,8 @@ def mode(df, attr_index):
         return 'The calculated mode over the %s attribute is %s.' % (attributes[attr_index], str(modes)[1:-1])
 
 
-# This method will output the min and max over a selected attribute, given an attribute with an appropriate data type.
-
-# In[ ]:
-
-
+# This method will output the min and max over a selected attribute,
+# given an attribute with an appropriate data type.
 def minmax(df, attr_index):
     attributes = attribute_list(df)
     if check_dtype(attr_index):
@@ -93,20 +67,12 @@ def minmax(df, attr_index):
 
 
 # This method will output a general description of statistical values.
-
-# In[ ]:
-
-
 def desc_data(df):
     include = ['object', 'float', 'int']
     return df.describe(include = include)
 
 
 # This will output rows within specified percentiles, given an attribute with an appropriate data type.
-
-# In[ ]:
-
-
 def interval(df, low_perc, high_perc, attr_index):
     attributes = attribute_list(df)
     if check_dtype(attr_index) and type(low_perc) == int and type(high_perc) == int:
@@ -121,12 +87,24 @@ def interval(df, low_perc, high_perc, attr_index):
         print('Dese not numbas.')
 
 
-# def line_plot(df, x_index, y_index):
-#     df1 = df.iloc[:,[x_index, y_index]]
-#     return df1
-# df = pd.read_csv('fortune500.csv')
-# db = line_plot(df, 1, 3)
+# This method takes in x and y attribute indices and creates a json file to be used in a line plot.
+def line_plot(df, x_index, y_index):
+    df1 = df.iloc[:,[x_index, y_index]]
+    df1['tuple']=list(zip(df.iloc[:,x_index],df.iloc[:,y_index]))
+    df1['tuple'].to_json('line_plot.json',orient='values')
 
-# db['tuple']=list(zip(df.iloc[:,0],df.iloc[:,1]))
 
-# db['tuple'].to_json('test.json',orient='values')
+# This method takes an attribute index and creates a json file to be used in a histogram.
+def histogram(df, x_index):
+    df1 = df.iloc[:,x_index].value_counts().reset_index()
+    df1['tuple']=list(zip(df1.iloc[:,1],df1.iloc[:,0]))
+    df1['tuple'].to_json('histogram.json',orient='values')
+
+
+# This method takes an attribute index and creates a json file to be used in a donut chart.
+def donut_chart(df, x_index):
+    df1 = df.iloc[:,x_index].value_counts().reset_index()
+    total = df1.iloc[:,1].sum()/100
+    df1['tuple']=list(zip(df1.iloc[:,1]/total,df1.iloc[:,0]))
+    df1['tuple'].to_json('donut_chart.json',orient='values')
+
