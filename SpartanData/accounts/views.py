@@ -124,8 +124,8 @@ def dashboard(request):
                 raise Exception('Invalid Uploaded File. Make sure it is a csv file.')
             df = pd.read_csv(uploaded_file)
             attributes = attribute_list(df)
-            request.sessions['df'] = df
-            request.sessions['attributes'] = attributes
+            #request.sessions['df'] = df
+            #request.sessions['attributes'] = attributes
             print(uploaded_file.name)
             print(uploaded_file.size)
             return redirect('/analysisChoose')
@@ -147,8 +147,8 @@ def dashboardResubmit(request):
                 raise Exception('Invalid Uploaded File. Make sure it is a csv file.')
             df = pd.read_csv(uploaded_file)
             attributes = attribute_list(df)
-            request.sessions['df'] = df
-            request.sessions['attributes'] = attributes
+            #request.sessions['df'] = df
+            #request.sessions['attributes'] = attributes
             print(uploaded_file.name)
             print(uploaded_file.size)
             print(df)
