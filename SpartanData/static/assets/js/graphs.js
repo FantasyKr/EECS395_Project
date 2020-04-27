@@ -1,5 +1,55 @@
 /************************************************************************************
- * Graph F5unctions:
+ * JSON retrieval
+ ************************************************************************************/
+$( document ).ready(function() {   
+   var url = "https://canvasjs.com/services/data/datapoints.php?xstart=1&ystart=10&length=100&type=json";
+   
+   $("#BarPlot").click(function(){
+      var dataPoints = [];
+      $.getJSON(url , function(data) {  
+         $.each(data, function(key, value){
+            dataPoints.push({y: value[0], label: value[1]});
+         });	
+         barchart(dataPoints, dataPointstrue, "light2", "NEWB", "yBitch");
+         //chart.render();
+      }); 
+   });
+   $("#DonutPlot").click(function(){
+      var dataPoints = [];
+      $.getJSON(url, function(data) {  
+         $.each(data, function(key, value){
+            dataPoints.push({y: value[0], label: value[1]});
+         });	
+         donutchart(dataPoints, true, "light2", "NEWB");
+         chart.render();
+      });
+  });
+ 
+   $("#ScatterPlot").click(function(){
+      var dataPoints = [];
+      $.getJSON(url, function(data) {  
+         $.each(data, function(key, value){
+            dataPoints.push({x: value[0], y: parseInt(value[1])});
+         });	
+         scatterchart(dataPoints, true, "light2", "NEWB", "xBitch", "yBitch");
+      });
+   });
+
+
+   $("#LinePlot").click(function(){   
+      var dataPoints = [];
+      $.getJSON(url, function(data) {  
+         $.each(data, function(key, value){
+            dataPoints.push({x: value[0], y: parseInt(value[1])});
+         });	
+         linechart(dataPoints, true, "dark1", "NEWB", "suck", "that") ;
+         chart.render();
+      });
+   });
+});
+
+/************************************************************************************
+ * Graph Functions:
  * linechart()
  * barchart()
  * donutchart()
@@ -14,7 +64,7 @@
  * @param xAxisTitle String of the desired x-axis title
  * @param yAxisTitle String of the desired y-axis title
 */
-function linechart(isInteractive, theme, title, xAxisTitle, yAxisTitle) {
+function linechart(data, isInteractive, theme, title, xAxisTitle, yAxisTitle) {
    //setup the div that the graph is going to be rendered at
    setupGraphDiv();
 
@@ -44,9 +94,7 @@ function linechart(isInteractive, theme, title, xAxisTitle, yAxisTitle) {
          markerType: "square",
          xValueFormatString: "DD MMM, YYYY",
          color: "#F08080",
-         dataPoints: [
-            
-         ]
+         dataPoints: data
       }]
    });
    
