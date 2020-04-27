@@ -48,18 +48,11 @@
 						<br>
 						<input type="submit" class="btn" value="Mean" name="meanbtn">
 						<h3>{{ mean }}</h3>
-						<br>
-						<br>
 						<input type="submit" class="btn" value="Median" name="medianbtn">
 						<h3> {{ median }} </h3>
-						<br>
-						<br>
 						<input type="submit" class="btn" value="Mode" name="modebtn">
 						<h3> {{ mode }} </h3>
 						<br>
-						<br>
-						<h3>{{ attributes }}</h3>
-						<p>Above Are the Attributes</p>
 						<!-- Trigger/Open The Modal -->
 						<button id="myLineBtn">Generate Line Graph</button>
 
@@ -67,7 +60,7 @@
 							<div id="myLineModal" class="modal"> 
 								<div class="modal-content">
 									<div class="modal-header">
-										<span class="close">&times;</span>
+										<span class="close" id="closeLine">&times;</span>
 										<h2>Line Graph</h2>
 									</div>
 									<div class="modal-body">
@@ -92,15 +85,15 @@
 									</div>					
 								</div>
 							</div>
-							<br>
+
 						<button id="myBarBtn">Generate Bar Graph</button>
 						
-								<!-- The Bar Modal -->
+							<!-- The Bar Modal -->
 							<div id="myBarModal" class="modal">
 								<div class="modal-content"> 
 									<div class="modal-header">
-										<span class="close">&times;</span>
-										<h2>Line Graph</h2>
+										<span class="close" id="closeBar">&times;</span>
+										<h2>Bar Graph</h2>
 									</div>
 									<div class="modal-body">
 										<form action="/action_page.php" method="get">
@@ -122,76 +115,71 @@
 										</form>
 									</div>			
 								</div>
-
 							</div>
-						<br>
+
 						<button id="myDonutBtn">Generate Donut Chart</button>
 						
-						<!-- The Donut Modal -->
-						<div id="myDonutModal" class="modal">
+							<!-- The Donut Modal -->
+							<div id="myDonutModal" class="modal">
 
-						<!-- Modal content -->
-						<div class="modal-content">
-							<div class="modal-header">
-								<span class="close">&times;</span>
-								<h2>Line Graph</h2>
+								<!-- Modal content -->
+								<div class="modal-content">
+									<div class="modal-header">
+										<span class="close" id="closeDonut">&times;</span>
+										<h2>Donut Graph</h2>
+									</div>
+									<div class="modal-body">
+										<form action="/action_page.php" method="get">
+											<input type="text" placeholder = "title" name="Title" size="1"/>
+											<select id="theme" name="Themes" form="themeform">
+												<option value="light1">Light 1</option>
+												<option value="light2">Light 2</option>
+												<option value="dark1">Dark 1</option>
+												<option value="dark2">Dark 2</option>
+											</select>
+											<label class="switch switch-slide">
+												<input class="switch-input" type="checkbox" />
+												<span class="switch-label" data-on="Interactive" data-off="Not Interactive"></span> 
+												<span class="switch-handle"></span>
+											</label>
+											<br>
+											<input type="submit" class="btn" value="Create Graph" name="mybtn">
+										</form>
+									</div>			
+								</div>
 							</div>
-							<div class="modal-body">
-								<form action="/action_page.php" method="get">
-									<input type="text" placeholder = "title" name="Title" size="1"/>
-									<select id="theme" name="Themes" form="themeform">
-										<option value="light1">Light 1</option>
-										<option value="light2">Light 2</option>
-										<option value="dark1">Dark 1</option>
-										<option value="dark2">Dark 2</option>
-									</select>
-									<label class="switch switch-slide">
-										<input class="switch-input" type="checkbox" />
-										<span class="switch-label" data-on="Interactive" data-off="Not Interactive"></span> 
-										<span class="switch-handle"></span>
-									</label>
-									<br>
-									<input type="submit" class="btn" value="Create Graph" name="mybtn">
-								</form>
-							</div>			
-						</div>
 
-						</div>
-						<br>
 						<button id="myScatterBtn">Generate Scatter Chart</button>
 						
 						<!-- The Scatter Modal -->
-						<div id="myScatterModal" class="modal">
-
-						<!-- Modal content -->
-						<div class="modal-content">
-							<div class="modal-header">
-								<span class="close">&times;</span>
-								<h2>Line Graph</h2>
+							<div id="myScatterModal" class="modal">
+								<div class="modal-content">
+									<div class="modal-header">
+										<span class="close" id="closeScatter">&times;</span>
+										<h2>Scatter Graph</h2>
+									</div>
+									<div class="modal-body">
+										<form action="/action_page.php" method="get">
+											<input type="text" placeholder = "title" name="Title" size="1"/>
+											<input type="text" placeholder = "x-axis title" name="XAxisTitle" size="1"/>
+											<input type="text" placeholder = "y axis title" name="YAxisTitle" size="1"/>
+											<select id="theme" name="Themes" form="themeform">
+												<option value="light1">Light 1</option>
+												<option value="light2">Light 2</option>
+												<option value="dark1">Dark 1</option>
+												<option value="dark2">Dark 2</option>
+											</select>
+											<label class="switch switch-slide">
+												<input class="switch-input" type="checkbox" />
+												<span class="switch-label" data-on="Interactive" data-off="Not Interactive"></span> 
+												<span class="switch-handle"></span>
+											</label>
+											<br>
+											<input type="submit" class="btn" value="Create Graph" name="mybtn">
+										</form>
+									</div>
+								</div>
 							</div>
-							<div class="modal-body">
-								<form action="/action_page.php" method="get">
-									<input type="text" placeholder = "title" name="Title" size="1"/>
-									<input type="text" placeholder = "x-axis title" name="XAxisTitle" size="1"/>
-									<input type="text" placeholder = "y axis title" name="YAxisTitle" size="1"/>
-									<select id="theme" name="Themes" form="themeform">
-										<option value="light1">Light 1</option>
-										<option value="light2">Light 2</option>
-										<option value="dark1">Dark 1</option>
-										<option value="dark2">Dark 2</option>
-									</select>
-									<label class="switch switch-slide">
-										<input class="switch-input" type="checkbox" />
-										<span class="switch-label" data-on="Interactive" data-off="Not Interactive"></span> 
-										<span class="switch-handle"></span>
-									</label>
-									<br>
-									<input type="submit" class="btn" value="Create Graph" name="mybtn">
-								</form>
-							</div>			>
-						</div>
-
-						</div>
 
 					</header>
 
@@ -213,10 +201,11 @@
 			<script src="{% static 'assets/js/main.js' %}"></script>
 			<script src="{% static 'assets/js/graphs.js' %}"></script>
 			<script src="{% static 'assets/js/multirange.js' %}"></script>
-			<script src="{% static 'assets/js/linemodal.js' %}"></script>
+			<script src="{% static 'assets/js/modals.js' %}"></script>
+			<!--<script src="{% static 'assets/js/linemodal.js' %}"></script>
 			<script src="{% static 'assets/js/barmodal.js' %}"></script>
 			<script src="{% static 'assets/js/donutmodal.js' %}"></script>
-			<script scr="{% static 'assets/js/scattermodal.js' %}"></script>
+			<script scr="{% static 'assets/js/scattermodal.js' %}"></script> -->
 
 	</body>
 </html>
