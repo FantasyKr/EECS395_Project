@@ -11,14 +11,16 @@ from .tokens import account_activation_token
 from django.template.loader import render_to_string
 from pandas.api.types import is_numeric_dtype
 import pandas as pd
-from .RegAnalysis import attribute_list
+from .RegAnalysis import attribute_list, mean, median, mode
 from .forms import SignUpForm
 from django.contrib.auth.forms import AuthenticationForm
 from .tokens import account_activation_token
 from django.core.mail import EmailMessage
 from django.http import HttpResponse
-
 from .forms import UploadDataForm
+
+GLOBAL_df = None
+GLOBAL_attributes = None
 
 def home_view(request):
     return render(request, 'login_home.html')
@@ -40,11 +42,35 @@ def predAnalysis(request):
     return render(request, 'predAnalysis.html')
 
 def regAnalysis(request):
-    #attributes = request.sessions.get('attributes')
-    #context = {
-    #    'attributes': attributes,
-    #}
-    return render(request, 'regAnalysis.html')
+    global GLOBAL_df, GLOBAL_attributes
+    attributes = GLOBAL_attributes
+    index = 0
+    mean = 0
+    median = 0
+    mode = 0
+    minRange = 0
+    maxRange = 100
+    print(attributes)
+
+    
+    if(request.GET.get('meanbtn')):
+        mean = RegAnalysis.mean(GLOBAL_df,index)
+
+    if(request.GET.get('modebtn')):
+        mode = RegAnalysis.mode(GLOBAL_df,index)
+
+    if(request.GET.get('medianbtn')):
+        median = RegAnalysis.median(GLOBAL_df,index)
+    
+    context = {
+        'attributes': attributes,
+        'mean': mean,
+        'mode': mode, 
+        'median': median,
+        'minRange': minRange, 
+        'maxRange': maxRange,
+    }
+    return render(request, 'regAnalysis.html' , context)
 
 def signup_view(request):
     if request.method  == 'POST':
@@ -113,6 +139,7 @@ def login_view(request):
                     context={'form':form})
 
 def dashboard(request):
+    global GLOBAL_df, GLOBAL_attributes
     if request.method == 'POST':
         uploaded_file = request.FILES['document']
         last_chars = uploaded_file.name[-3:]
@@ -124,8 +151,9 @@ def dashboard(request):
                 raise Exception('Invalid Uploaded File. Make sure it is a csv file.')
             df = pd.read_csv(uploaded_file)
             attributes = attribute_list(df)
-            request.sessions['df'] = df
-            request.sessions['attributes'] = attributes
+            GLOBAL_attributes = attributes
+            #request.sessions['df'] = df
+            #request.sessions['attributes'] = attributes
             print(uploaded_file.name)
             print(uploaded_file.size)
             return redirect('/analysisChoose')
@@ -137,6 +165,7 @@ def dashboard(request):
     return render(request, 'dashboard.html')
 
 def dashboardResubmit(request):
+    global GLOBAL_df, GLOBAL_attributes
     if request.method == 'POST':
         uploaded_file = request.FILES['document']
         last_chars = uploaded_file.name[-3:]
@@ -147,8 +176,9 @@ def dashboardResubmit(request):
                 raise Exception('Invalid Uploaded File. Make sure it is a csv file.')
             df = pd.read_csv(uploaded_file)
             attributes = attribute_list(df)
-            request.sessions['df'] = df
-            request.sessions['attributes'] = attributes
+            GLOBAL_attributes = attributes
+            #request.sessions['df'] = df
+            #request.sessions['attributes'] = attributes
             print(uploaded_file.name)
             print(uploaded_file.size)
             print(df)
