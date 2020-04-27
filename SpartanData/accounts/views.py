@@ -11,13 +11,12 @@ from .tokens import account_activation_token
 from django.template.loader import render_to_string
 from pandas.api.types import is_numeric_dtype
 import pandas as pd
-from .RegAnalysis import attribute_list
+from accounts import RegAnalysis
 from .forms import SignUpForm
 from django.contrib.auth.forms import AuthenticationForm
 from .tokens import account_activation_token
 from django.core.mail import EmailMessage
 from django.http import HttpResponse
-
 from .forms import UploadDataForm
 
 GLOBAL_df = None
@@ -50,6 +49,17 @@ def regAnalysis(request):
         'attributes': attributes,
     }
     return render(request, 'regAnalysis.html', context)
+
+    if(request.GET.get('meanbtn')):
+       RegAnalysis.mean(df,index)
+
+    if(request.GET.get('modebtn')):
+        RegAnalysis.mode(df,index)
+
+    if(request.GET.get('medianbtn')):
+        RegAnalysis.median(df,index)
+
+    return render(request, 'regAnalysis.html')
 
 def signup_view(request):
     if request.method  == 'POST':
