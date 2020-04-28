@@ -3,25 +3,33 @@
  ************************************************************************************/
 $( document ).ready(function() {   
    var url = "https://canvasjs.com/services/data/datapoints.php?xstart=1&ystart=10&length=100&type=json";
+
    $("#BarForm").submit(function() {
-      
+      alert("you reached here 1");
       var dataPoints = [];
       $.getJSON(url , function(data) {  
+         alert("you reached spot 3");
          $.each(data, function(key, value){
             dataPoints.push({y: value[0], label: value[1]});
          });	
-         barchart(dataPoints, dataPointstrue, "light2", "NEWB", "yBitch");
+         barchart(true, "light2", "NEWB", "yBitch");
       }); 
    });
    $("#DonutForm").submit(function() {
       var dataPoints = [];
-      $.getJSON(url, function(data) {  
-         $.each(data, function(key, value){
-            dataPoints.push({y: value[0], label: value[1]});
-         });	
-         donutchart(dataPoints, true, "light2", "NEWB");
+      $.ajax({
+         url:        url,
+         dataType:   "jsonp", // <== JSON-P request
+         success:    function(data){
+            $.each(data, function(key, value){ // <=== Note, `data.results`, not just `data`
+               dataPoints.push({y: value[0], label: value[1]});// <=== Or `entry.from_user` would also work (although `entry['from_user']` is just fine)
+            });
+            donutchart(dataPoints, true, "light2", "NEWB");
+            alert("hi"); // <== Note I've moved this (see #2 above)
+         }
       });
    });
+
    $("#scattersubmit").onclick(function() {
       alert("You did it!");
       var dataPoints = [];
@@ -232,19 +240,6 @@ function scatterchart(isInteractive, theme, title, xAxisTitle, yAxisTitle){
    });
    chart.render();
 }
-
-/***********************************************************************************
- * Get Data 
- ***********************************************************************************/
-function getData(chart){
-   $.getJSON("https://canvasjs.com/services/data/datapoints.php?xstart=1&ystart=10&length=100&type=json", function(data) {  
-      $.each(data, function(key, value){
-         dataPoints.push({x: value[0], y: parseInt(value[1])});
-      });	
-      chart.render();
-   });
-}
-
 /************************************************************************************
  * Setup of the Div element that the graphs will be rendered into 
  ************************************************************************************/
