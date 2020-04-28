@@ -3,8 +3,8 @@
  ************************************************************************************/
 $( document ).ready(function() {   
    var url = "https://canvasjs.com/services/data/datapoints.php?xstart=1&ystart=10&length=100&type=json";
-   
-   $("#BarPlot").click(function(){
+   $("#BarForm").submit(function() {
+      
       var dataPoints = [];
       $.getJSON(url , function(data) {  
          $.each(data, function(key, value){
@@ -13,7 +13,7 @@ $( document ).ready(function() {
          barchart(dataPoints, dataPointstrue, "light2", "NEWB", "yBitch");
       }); 
    });
-   $("#DonutPlot").click(function(){
+   $("#DonutForm").submit(function() {
       var dataPoints = [];
       $.getJSON(url, function(data) {  
          $.each(data, function(key, value){
@@ -21,9 +21,9 @@ $( document ).ready(function() {
          });	
          donutchart(dataPoints, true, "light2", "NEWB");
       });
-  });
- 
-   $("#ScatterPlot").click(function(){
+   });
+   $("#scattersubmit").onclick(function() {
+      alert("You did it!");
       var dataPoints = [];
       $.getJSON(url, function(data) {  
          $.each(data, function(key, value){
@@ -33,8 +33,7 @@ $( document ).ready(function() {
       });
    });
 
-
-   $("#LinePlot").click(function(){   
+   $("#LineForm").submit(function() {
       var dataPoints = [];
       $.getJSON(url, function(data) {  
          $.each(data, function(key, value){

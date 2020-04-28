@@ -79,7 +79,8 @@
 										<h2>Line Graph</h2>
 									</div>
 									<div class="modal-body">
-										<form action="/action_page.php" method="get">
+										<form id="LineForm" method="post">
+											{% csrf_token %} 
 											<input type="text" placeholder = "title" name="Title" size="1"/>
 											<input type="text" placeholder = "x-axis title" name="XAxisTitle" size="1"/>
 											<input type="text" placeholder = "y axis title" name="YAxisTitle" size="1"/>
@@ -111,7 +112,8 @@
 										<h2>Bar Graph</h2>
 									</div>
 									<div class="modal-body">
-										<form action="/action_page.php" method="get">
+										<form id="BarForm" method="post">
+											{% csrf_token %} 
 											<input type="text" placeholder = "title" name="Title" size="1"/>
 											<input type="text" placeholder = "y axis title" name="YAxisTitle" size="1"/>
 											<select id="theme" name="Themes" form="themeform">
@@ -142,7 +144,8 @@
 										<h2>Donut Graph</h2>
 									</div>
 									<div class="modal-body">
-										<form action="/action_page.php" method="get">
+										<form id="DonutForm" method="post">
+											{% csrf_token %} 
 											<input type="text" placeholder = "title" name="Title" size="1"/>
 											<select id="theme" name="Themes" form="themeform">
 												<option value="light1">Light 1</option>
@@ -170,7 +173,8 @@
 										<h2>Scatter Graph</h2>
 									</div>
 									<div class="modal-body">
-										<form action="/action_page.php" method="get">
+										<form id="ScatterForm" method="post">
+											{% csrf_token %} 
 											<input type="text" placeholder = "title" name="Title" size="1"/>
 											<input type="text" placeholder = "x-axis title" name="XAxisTitle" size="1"/>
 											<input type="text" placeholder = "y axis title" name="YAxisTitle" size="1"/>
@@ -191,9 +195,13 @@
 									</div>
 								</div>
 							</div>
-
 					</header>
-
+			<body>
+				<!-- Graph Container -->	
+				<div id="graphContainer">  
+					<div class="inner"> </div>
+				</div>
+			</body>
 					<!-- Footer -->
 			<footer id="footer">
 				<div class="container">
