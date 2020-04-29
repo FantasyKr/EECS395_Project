@@ -11,6 +11,8 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" type="text/css" href="{% static 'assets/css/main.css' %}" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 	</head>
 
 	<body>
@@ -81,20 +83,15 @@
 									<div class="modal-body">
 										<form id="LineForm" method="post">
 											{% csrf_token %} 
-											<input type="text" placeholder = "title" name="Title" size="1"/>
-											<input type="text" placeholder = "x-axis title" name="XAxisTitle" size="1"/>
-											<input type="text" placeholder = "y axis title" name="YAxisTitle" size="1"/>
-											<select id="theme" name="Themes" form="themeform">
+											Title: <input type="text" placeholder = "title" id="linetitle" size="1"/>
+											X-Axis Title:<input type="text" placeholder = "x-axis title" id="lineXAxisTitle" size="1"/>
+											Y-Axis Title: <input type="text" placeholder = "y-axis title" id="lineYAxisTitle" size="1"/>
+											Theme: <select id="lineTheme" name="Themes" form="themeform">
 												<option value="light1">Light 1</option>
 												<option value="light2">Light 2</option>
 												<option value="dark1">Dark 1</option>
 												<option value="dark2">Dark 2</option>
 											</select>
-											<label class="switch switch-slide">
-												<input class="switch-input" type="checkbox" />
-												<span class="switch-label" data-on="Interactive" data-off="Not Interactive"></span> 
-												<span class="switch-handle"></span>
-											</label>
 											<br>
 											<input type="submit" class="btn" value="Create Graph" name="mybtn">
 										</form>
@@ -113,22 +110,17 @@
 									</div>
 									<div class="modal-body">
 										<form id="BarForm" method="post">
-											{% csrf_token %} 
-											<input type="text" placeholder = "title" name="Title" size="1"/>
-											<input type="text" placeholder = "y axis title" name="YAxisTitle" size="1"/>
-											<select id="theme" name="Themes" form="themeform">
+											{% csrf_token %}
+											Title: <input type="text" placeholder = "title" id="bartitle" size="1"/>
+											Y-Axis Title: <input type="text" placeholder = "y axis title" id="barYAxisTitle" size="1"/>
+											Theme: <select id="barTheme" name="Themes" form="themeform">
 												<option value="light1">Light 1</option>
 												<option value="light2">Light 2</option>
 												<option value="dark1">Dark 1</option>
 												<option value="dark2">Dark 2</option>
 											</select>
-											<label class="switch switch-slide">
-												<input class="switch-input" type="checkbox" />
-												<span class="switch-label" data-on="Interactive" data-off="Not Interactive"></span> 
-												<span class="switch-handle"></span>
-											</label>
 											<br>
-											<input type="submit" class="btn" value="Create Graph" name="mybtn">
+											<input type="submit" class="btn" id="SUBMITFUCKER" value="Create Graph" name="mybtn">
 										</form>
 									</div>			
 								</div>
@@ -146,21 +138,17 @@
 									<div class="modal-body">
 										<form id="DonutForm" method="post">
 											{% csrf_token %} 
-											<input type="text" placeholder = "title" name="Title" size="1"/>
-											<select id="theme" name="Themes" form="themeform">
+											Title: <input type="text" placeholder = "title" id="donuttitle" size="1"/>
+											Theme: <select id="donutTheme" name="Themes">
 												<option value="light1">Light 1</option>
 												<option value="light2">Light 2</option>
 												<option value="dark1">Dark 1</option>
 												<option value="dark2">Dark 2</option>
 											</select>
-											<label class="switch switch-slide">
-												<input class="switch-input" type="checkbox" />
-												<span class="switch-label" data-on="Interactive" data-off="Not Interactive"></span> 
-												<span class="switch-handle"></span>
-											</label>
 											<br>
 											<input type="submit" class="btn" value="Create Graph" name="mybtn">
 										</form>
+										
 									</div>			
 								</div>
 							</div>
@@ -175,20 +163,15 @@
 									<div class="modal-body">
 										<form id="ScatterForm" method="post" >
 											{% csrf_token %} 
-											<input type="text" placeholder = "title" name="Title" size="1"/>
-											<input type="text" placeholder = "x-axis title" name="XAxisTitle" size="1"/>
-											<input type="text" placeholder = "y axis title" name="YAxisTitle" size="1"/>
-											<select id="theme" name="Themes" form="themeform">
+											Title: <input type="text" placeholder = "title" id="scattertitle" size="1"/>
+											X-Axis Title: <input type="text" placeholder = "x-axis title" id="scatterXAxisTitle" size="1"/>
+											Y-Axis Title: <input type="text" placeholder = "y axis title" id="scatterYAxisTitle" size="1"/>
+											Theme: <select id="scatterTheme" name="Themes" form="themeform">
 												<option value="light1">Light 1</option>
 												<option value="light2">Light 2</option>
 												<option value="dark1">Dark 1</option>
 												<option value="dark2">Dark 2</option>
 											</select>
-											<label class="switch switch-slide">
-												<input class="switch-input" type="checkbox" />
-												<span class="switch-label" data-on="Interactive" data-off="Not Interactive"></span> 
-												<span class="switch-handle"></span>
-											</label>
 											<br>
 											<input type="submit" class="btn" value="Create Graph" name="mybtn">
 										</form>
@@ -196,12 +179,10 @@
 								</div>
 							</div>
 					</header>
-			<body>
+			
 				<!-- Graph Container -->	
-				<div id="graphContainer">  
-					<div class="inner"> </div>
-				</div>
-			</body>
+				<div id="graphContainer"> </div>
+
 					<!-- Footer -->
 			<footer id="footer">
 				<div class="container">
@@ -214,10 +195,6 @@
 			</footer>
 
 		<!-- Scripts -->
-			<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-			<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
-			<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-			<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>  
 			<script src="{% static 'assets/js/jquery.min.js' %}"></script>
 			<script src="{% static 'assets/js/skel.min.js' %}"></script>
 			<script src="{% static 'assets/js/util.js' %}"></script>
@@ -225,10 +202,5 @@
 			<script src="{% static 'assets/js/graphs.js' %}"></script>
 			<script src="{% static 'assets/js/multirange.js' %}"></script>
 			<script src="{% static 'assets/js/modals.js' %}"></script>
-			<!--<script src="{% static 'assets/js/linemodal.js' %}"></script>
-			<script src="{% static 'assets/js/barmodal.js' %}"></script>
-			<script src="{% static 'assets/js/donutmodal.js' %}"></script>
-			<script scr="{% static 'assets/js/scattermodal.js' %}"></script> -->
-
 	</body>
 </html>

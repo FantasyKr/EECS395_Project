@@ -3,52 +3,107 @@
  ************************************************************************************/
 $( document ).ready(function() {   
    var url = "https://canvasjs.com/services/data/datapoints.php?xstart=1&ystart=10&length=100&type=json";
+   var modalMaster = document.getElementById('myMasterModal')
+   var modalLine = document.getElementById('myLineModal');
+   var modalBar = document.getElementById('myBarModal');
+   var modalDonut = document.getElementById('myDonutModal');
+   var modalScatter = document.getElementById('myScatterModal');
 
-   $("#BarForm").submit(function() {
-      alert("you reached here 1");
+   var barfrm = $('#BarForm');
+   $('#BarForm').submit(function () {
       var dataPoints = [];
-      $.getJSON(url , function(data) {  
-         alert("you reached spot 3");
-         $.each(data, function(key, value){
-            dataPoints.push({y: value[0], label: value[1]});
-         });	
-         barchart(true, "light2", "NEWB", "yBitch");
-      }); 
-   });
-   $("#DonutForm").submit(function() {
-      var dataPoints = [];
+      console.log("creating bar form");
+
       $.ajax({
-         url:        url,
-         dataType:   "jsonp", // <== JSON-P request
-         success:    function(data){
-            $.each(data, function(key, value){ // <=== Note, `data.results`, not just `data`
-               dataPoints.push({y: value[0], label: value[1]});// <=== Or `entry.from_user` would also work (although `entry['from_user']` is just fine)
+         type: barfrm.attr('method'),
+         url: barfrm.attr('action'),
+         data: $("#BarForm").serialize(),
+         success: function (formData) {	
+            $.getJSON(url, function(data) {  
+               console.log("getting data");
+               $.each(data, function(key, value){ // <=== Note, `data.results`, not just `data`
+                  dataPoints.push({y: value[0], label: value[1]});// <=== Or `entry.from_user` would also work (although `entry['from_user']` is just fine)
+               });
+               barchart(dataPoints, true, $('#barTheme').val(), $('#bartitle').val() , $('#barYAxisTitle').val());
             });
-            donutchart(dataPoints, true, "light2", "NEWB");
-            alert("hi"); // <== Note I've moved this (see #2 above)
          }
       });
+      //close the modal
+      modalBar.style.display = "none";
+      modalMaster.style.display = "none";
+      return false;
    });
 
-   $("#scattersubmit").onclick(function() {
-      alert("You did it!");
+   var donutfrm = $('#DonutForm');
+   $('#DonutForm').submit(function () {
       var dataPoints = [];
-      $.getJSON(url, function(data) {  
-         $.each(data, function(key, value){
-            dataPoints.push({x: value[0], y: parseInt(value[1])});
-         });	
-         scatterchart(dataPoints, true, "light2", "NEWB", "xBitch", "yBitch");
+      console.log("creating donut graph");
+
+      $.ajax({
+         type: donutfrm.attr('method'),
+         url: donutfrm.attr('action'),
+         data: $("#DonutForm").serialize(),
+         success: function (formData) {	
+            $.getJSON(url, function(data) {  
+               console.log("getting data for donut graph");
+               $.each(data, function(key, value){ // <=== Note, `data.results`, not just `data`
+                  dataPoints.push({y: value[0], label: value[1]});// <=== Or `entry.from_user` would also work (although `entry['from_user']` is just fine)
+               });
+               donutchart(dataPoints, true,  $('#donutTheme').val(), $('#donuttitle').val());
+            });
+         }
       });
+      //close the modal
+      modalDonut.style.display = "none";
+      modalMaster.style.display = "none";
+      return false;
    });
 
-   $("#LineForm").submit(function() {
+   var scatterfrm = $('#ScatterForm');
+   $('#ScatterForm').submit(function () {
       var dataPoints = [];
-      $.getJSON(url, function(data) {  
-         $.each(data, function(key, value){
-            dataPoints.push({x: value[0], y: parseInt(value[1])});
-         });	
-         linechart(dataPoints, true, "dark1", "NEWB", "suck", "that") ;
+      console.log("creating donut graph");
+
+      $.ajax({
+         type: scatterfrm.attr('method'),
+         url: scatterfrm.attr('action'),
+         data: $("#ScatterForm").serialize(),
+         success: function (formData) {	
+            $.getJSON(url, function(data) {  
+               console.log("getting data for donut graph");
+               $.each(data, function(key, value){ // <=== Note, `data.results`, not just `data`
+                  dataPoints.push({x: value[0], y: parseInt(value[1])});// <=== Or `entry.from_user` would also work (although `entry['from_user']` is just fine)
+               });
+               scatterchart(dataPoints, true,  $('#scatterTheme').val(), $('#scattertitle').val(), $('#scatterXAxisTitle').val(), $('#scatterYAxisTitle').val());
+            });
+         }
       });
+      //close the modal
+      modalScatter.style.display = "none";
+      modalMaster.style.display = "none";
+      return false;
+   });
+
+   var frm = $('#LineForm');
+   $('#LineForm').submit(function () {
+      var dataPoints = [];
+      $.ajax({
+         type: frm.attr('method'),
+         url: frm.attr('action'),
+         data: $("#LineForm").serialize(),
+         success: function (formData) {	
+            $.getJSON(url, function(data) {  
+               $.each(data, function(key, value){ // <=== Note, `data.results`, not just `data`
+                  dataPoints.push({x: value[0], y: parseInt(value[1])});// <=== Or `entry.from_user` would also work (although `entry['from_user']` is just fine)
+               });
+               linechart(dataPoints, true, $('#lineTheme').val(), $('#linetitle').val() , $('#lineXAxisTitle').val(), $('#lineYAxisTitle').val());
+            });
+         }
+      });
+      //close the modal
+      modalLine.style.display = "none";
+      modalMaster.style.display = "none";
+      return false;
    });
 });
 
@@ -74,44 +129,23 @@ function linechart(data, isInteractive, theme, title, xAxisTitle, yAxisTitle) {
 
    var chart = new CanvasJS.Chart("Graph" + idGraph.toString(), {
       animationEnabled: isInteractive,
-      theme: theme,
+      theme: "light2",
       title:{
-         text: title.toString()
+         text: title
       },
       axisX:{
-         title : xAxisTitle.toString(),
+         title : xAxisTitle,
       },
       axisY: {
-         title: yAxisTitle.toString(),
-      },
-      legend:{
-         cursor:"pointer",
-         verticalAlign: "bottom",
-         horizontalAlign: "left",
-         dockInsidePlotArea: true,
-         itemclick: toogleDataSeries
+         title: yAxisTitle,
       },
       data: [{
          type: "line",
-         showInLegend: true,
-         name: "Total Visit",
-         markerType: "square",
-         xValueFormatString: "DD MMM, YYYY",
-         color: "#F08080",
          dataPoints: data
       }]
    });
    
-   getData(chart);
-
-   function toogleDataSeries(e){
-      if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-         e.dataSeries.visible = false;
-      } else{
-         e.dataSeries.visible = true;
-      }
-      chart.render();
-   }
+   chart.render();
 }
 
 /** 
@@ -122,29 +156,20 @@ function linechart(data, isInteractive, theme, title, xAxisTitle, yAxisTitle) {
  * @param xAxisTitle String of the desired x-axis title
  * @param yAxisTitle String of the desired y-axis title
 */
-function barchart(isInteractive, theme, title, yAxisTitle){
+function barchart(data, isInteractive, theme, title, yAxisTitle){
    setupGraphDiv();
    var chart = new CanvasJS.Chart("Graph" + idGraph.toString(), {
       animationEnabled: isInteractive,
       theme: theme,
       title:{
-         text: title.toString()
+         text: title
       },
       axisY: {
-         title: yAxisTitle.toString()
+         title: yAxisTitle
       },
       data: [{        
          type: "column",  
-         dataPoints: [      
-            { y: 300878, label: "Venezuela" },
-            { y: 266455,  label: "Saudi" },
-            { y: 169709,  label: "Canada" },
-            { y: 158400,  label: "Iran" },
-            { y: 142503,  label: "Iraq" },
-            { y: 101500, label: "Kuwait" },
-            { y: 97800,  label: "UAE" },
-            { y: 80000,  label: "Russia" }
-         ]
+         dataPoints: data
       }]
    });
    chart.render();
@@ -158,7 +183,7 @@ function barchart(isInteractive, theme, title, yAxisTitle){
  * @param xAxisTitle String of the desired x-axis title
  * @param yAxisTitle String of the desired y-axis title
 */
-function donutchart(isInteractive, theme, title){
+function donutchart(data, isInteractive, theme, title){
    setupGraphDiv();
    var chart = new CanvasJS.Chart("Graph" + idGraph.toString(), {
       animationEnabled: isInteractive,
@@ -172,14 +197,7 @@ function donutchart(isInteractive, theme, title){
          indexLabelFontSize: 17,
          indexLabel: "{label} - #percent%",
          toolTipContent: "<b>{label}:</b> {y} (#percent%)",
-         dataPoints: [
-            { y: 67, label: "Inbox" },
-            { y: 28, label: "Archives" },
-            { y: 10, label: "Labels" },
-            { y: 7, label: "Drafts"},
-            { y: 15, label: "Trash"},
-            { y: 6, label: "Spam"}
-         ]
+         dataPoints: data
       }]
    });
    chart.render();
@@ -193,7 +211,7 @@ function donutchart(isInteractive, theme, title){
  * @param xAxisTitle String of the desired x-axis title
  * @param yAxisTitle String of the desired y-axis title
 */
-function scatterchart(isInteractive, theme, title, xAxisTitle, yAxisTitle){
+function scatterchart(data, isInteractive, theme, title, xAxisTitle, yAxisTitle){
    setupGraphDiv();
    var chart = new CanvasJS.Chart("Graph" + idGraph.toString(), {
       animationEnabled: isInteractive,
@@ -210,32 +228,7 @@ function scatterchart(isInteractive, theme, title, xAxisTitle, yAxisTitle){
       },
       data: [{
          type: "scatter",
-         dataPoints: [
-            { x: 800, y: 350 },
-            { x: 900, y: 450 },
-            { x: 850, y: 450 },
-            { x: 1250, y: 700 },
-            { x: 1100, y: 650 },
-            { x: 1350, y: 850 },
-            { x: 1200, y: 900 },
-            { x: 1410, y: 1250 },
-            { x: 1250, y: 1100 },
-            { x: 1400, y: 1150 },
-            { x: 1500, y: 1050 },
-            { x: 1330, y: 1120 },
-            { x: 1580, y: 1220 },
-            { x: 1620, y: 1400 },
-            { x: 1250, y: 1450 },
-            { x: 1350, y: 1600 },
-            { x: 1650, y: 1300 },
-            { x: 1700, y: 1620 },
-            { x: 1750, y: 1700 },
-            { x: 1830, y: 1800 },
-            { x: 1900, y: 2000 },
-            { x: 2050, y: 2200 },
-            { x: 2150, y: 1960 },
-            { x: 2250, y: 1990 }
-         ]
+         dataPoints: data
       }]
    });
    chart.render();
@@ -253,7 +246,6 @@ var idGraph = 0;
  */
 function setupGraphDiv(){
    ++idGraph;
-
    //creating div and remove button
    div = createGraphDiv();
    button = createRemoveButton(); 
@@ -279,6 +271,8 @@ function createGraphDiv(){
 function createRemoveButton(){
    button = document.createElement('button'); 
    button.id = idGraph.toString();
+   button.setAttribute("value", "Remove");
+
    button.onclick = (function(){ 
        var graphDiv = document.getElementById("Graph" + this.id.toString());
        var buttonDiv = document.getElementById(this.id.toString());
