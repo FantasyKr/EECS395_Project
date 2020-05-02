@@ -1,6 +1,6 @@
 
 (function() {
-    /* Modal */
+    /* Modal */   
     var modalMaster = document.getElementById('myMasterModal')
     var modalLine = document.getElementById('myLineModal');
     var modalBar = document.getElementById('myBarModal');

@@ -36,14 +36,10 @@
 				<div class="container">
 					<header class="major special">
 						<h3>Attribute Selection</h3>
+						<br>				
+						<select id="attributeSel" name="attributeSelection"></select>
 						<br>
-						<select id="attributeSel" name="attributeSelection" form="attributeform">
-							<option value="attr1">Light 1</option>
-							<option value="light2">Light 2</option>
-							<option value="dark1">Dark 1</option>
-							<option value="dark2">Dark 2</option>
-						</select>
-						<br>
+						<div id=testDIV> hello </div>
 						<h3> Select Range</h3>
 						<br>
 						<input type="range" multiple value="0, 100" />
@@ -138,6 +134,12 @@
 									<div class="modal-body">
 										<form id="DonutForm" method="post">
 											{% csrf_token %} 
+											Attribute: <select id="donutAttribute" name="attribute" required>
+												<option value="light1">Light 1</option>
+												<option value="light2">Light 2</option>
+												<option value="dark1">Dark 1</option>
+												<option value="dark2">Dark 2</option>
+											</select>
 											Title: <input type="text" placeholder = "title" id="donuttitle" size="1"/>
 											Theme: <select id="donutTheme" name="Themes">
 												<option value="light1">Light 1</option>

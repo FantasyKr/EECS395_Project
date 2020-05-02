@@ -8,6 +8,24 @@ $( document ).ready(function() {
    var modalBar = document.getElementById('myBarModal');
    var modalDonut = document.getElementById('myDonutModal');
    var modalScatter = document.getElementById('myScatterModal');
+   
+     var newOptions = "{{attributes}}";
+     var selectedOption = newOptions[0];
+  
+     var select = $('#attributeSel');
+     if(select.prop) {
+        var options = select.prop('options');
+     }
+     else {
+        var options = select.attr('options');
+     }
+     $('option', select).remove();
+  
+     $.each(newOptions, function(val, text) {
+        options[options.length] = new Option(text, val);
+     });
+  
+     select.val(selectedOption);
 
    var barfrm = $('#BarForm');
    $('#BarForm').submit(function () {
@@ -19,7 +37,7 @@ $( document ).ready(function() {
          url: barfrm.attr('action'),
          data: $("#BarForm").serialize(),
          success: function (formData) {	
-            $.getJSON(url, function(data) {  
+            $.getJSON('http://localhost:8000/regAnalysis/test.json&callback=?', function(data) {  
                console.log("getting data");
                $.each(data, function(key, value){ // <=== Note, `data.results`, not just `data`
                   dataPoints.push({y: value[0], label: value[1]});// <=== Or `entry.from_user` would also work (although `entry['from_user']` is just fine)

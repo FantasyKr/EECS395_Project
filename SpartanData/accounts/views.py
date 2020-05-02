@@ -19,6 +19,8 @@ from django.core.mail import EmailMessage
 from django.http import HttpResponse
 from .forms import UploadDataForm
 
+import json
+
 GLOBAL_df = None
 GLOBAL_attributes = None
 
@@ -27,7 +29,6 @@ def home_view(request):
 
 def activated_view(request):
     return render(request, 'activated.html')
-
 
 def login_home_view(request):
     return render(request, 'home.html')
@@ -51,7 +52,6 @@ def regAnalysis(request):
     minRange = 0
     maxRange = 100
     print(attributes)
-
     
     if(request.GET.get('meanbtn')):
         mean = RegAnalysis.mean(GLOBAL_df,index)
@@ -150,8 +150,9 @@ def dashboard(request):
                 redirected = True
                 raise Exception('Invalid Uploaded File. Make sure it is a csv file.')
             df = pd.read_csv(uploaded_file)
-            attributes = attribute_list(df)
+            attributes = df.columns.values.tolist()
             GLOBAL_attributes = attributes
+            print(GLOBAL_attributes)
             #request.sessions['df'] = df
             #request.sessions['attributes'] = attributes
             print(uploaded_file.name)
@@ -175,8 +176,9 @@ def dashboardResubmit(request):
                 print(uploaded_file.size)
                 raise Exception('Invalid Uploaded File. Make sure it is a csv file.')
             df = pd.read_csv(uploaded_file)
-            attributes = attribute_list(df)
+            attributes = df.columns.values.tolist()
             GLOBAL_attributes = attributes
+            print("attribute: " + GLOBAL_attributes)
             #request.sessions['df'] = df
             #request.sessions['attributes'] = attributes
             print(uploaded_file.name)
@@ -189,3 +191,14 @@ def dashboardResubmit(request):
             #user.profile.upload_confirmation = True
             #user.save()
     return render(request, 'dashboardResubmit.html')
+
+#def dashboardMasterModalSubmit(request):
+
+def dashboardLineModalSubmit(request):
+    if request.method == 'POST':
+        x_index = int(request.POST.get('x_index'))
+        y_index = int(request.POST.get('y_index'))
+        df1 = GLOBAL_df.iloc[:,[x_index, y_index]]
+        df1['tuple']=list(zip(GLOBAL_df.iloc[:,x_index],GLOBAL_df.iloc[:,y_index]))
+        data = df1['tuple'].to_json('line_plot.json',orient='values')
+        return HttpResponse(data)
