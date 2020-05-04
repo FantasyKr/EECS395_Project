@@ -92,7 +92,10 @@ def interval(df, low_perc, high_perc, attr_index):
 
 # This method takes in x and y attribute indices and creates a json file to be used in a line plot.
 def line_plot(df, x_index, y_index):
+    attributes = attribute_list(df)
+    sortby = attributes[x_index]
     df1 = df.iloc[:,[x_index, y_index]]
+    df1.sort_values(by=sortby)
     df1['tuple']=list(zip(df.iloc[:,x_index],df.iloc[:,y_index]))
     df1['tuple'].to_json('line_plot.json',orient='values')
 
