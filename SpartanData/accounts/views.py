@@ -11,7 +11,7 @@ from .tokens import account_activation_token
 from django.template.loader import render_to_string
 from pandas.api.types import is_numeric_dtype
 import pandas as pd
-from .RegAnalysis import attribute_list, mean, median, mode, csv_json
+from .RegAnalysis import attribute_list, mean, median, mode
 from .forms import SignUpForm
 from django.contrib.auth.forms import AuthenticationForm
 from .tokens import account_activation_token
@@ -23,6 +23,8 @@ import json
 
 GLOBAL_df = None
 GLOBAL_attributes = None
+GLOBAL_attributes_mean = None
+GLOBAL_uploaded_file = None
 
 def home_view(request):
     return render(request, 'login_home.html')
@@ -40,31 +42,48 @@ def analysisChoose(request):
     return render(request, 'analysisChoose.html')
 
 def predAnalysis(request):
-    return render(request, 'predAnalysis.html')
-
-def regAnalysis(request):
-    global GLOBAL_df, GLOBAL_attributes
-    uploaded_file = GLOBAL_df
+    global GLOBAL_df, GLOBAL_attributes, GLOBAL_uploaded_file
     attributes = GLOBAL_attributes
-    attribute_means = []
-    attribute_count = 0
-    attribute_medians = []
-    attribute_modes = []
-    minRange = 1
-    maxRange = 100
-
-    for attribute in attributes: 
-        attribute_means.append(mean(uploaded_file, attribute_count))
-        attribute_medians.append(median(uploaded_file, attribute_count))
-        attribute_modes.append(mode(uploaded_file, attribute_count))
-        attribute_count = attribute_count + 1
+    uploaded_file = GLOBAL_uploaded_file
 
     context = {
-        'uploaded_file': csv_json(uploaded_file),
+        'uploaded_file': uploaded_file,
         'attributes': attributes,
-        'mean': attribute_means,
-        'mode': attribute_modes, 
-        'median': attribute_medians,
+    }
+
+    return render(request, 'predAnalysis.html', context)
+
+def regAnalysis(request):
+    global GLOBAL_df, GLOBAL_attributes, GLOBAL_uploaded_file
+    attributes = GLOBAL_attributes
+    uploaded_file = GLOBAL_uploaded_file
+    attribute_means = []
+    attribute_count = 0
+    index = 0
+    mean = 0
+    median = 0
+    mode = []
+    minRange = 1
+    maxRange = 100
+    print(attributes)
+
+    if(request.GET.get('meanbtn')):
+        mean = RegAnalysis.mean(GLOBAL_df,index)
+
+    if(request.GET.get('modebtn')):
+        mode = RegAnalysis.mode(GLOBAL_df,index)
+
+    if(request.GET.get('medianbtn')):
+        median = RegAnalysis.median(GLOBAL_df, index)
+
+
+    median = RegAnalysis.mean(Global_df, index)
+    context = {
+        'uploaded_file': uploaded_file,
+        'attributes': attributes,
+        'mean': mean,
+        'mode': mode,
+        'median': median,
         'minRange': minRange,
         'maxRange': maxRange,
     }
@@ -150,7 +169,7 @@ def dashboard(request):
             df = pd.read_csv(uploaded_file)
             attributes = df.columns.values.tolist()
             GLOBAL_attributes = attributes
-            GLOBAL_df = df
+            GLOBAL_uploaded_file = uploaded_file
             print(GLOBAL_attributes)
             #request.sessions['df'] = df
             #request.sessions['attributes'] = attributes
@@ -177,7 +196,7 @@ def dashboardResubmit(request):
             df = pd.read_csv(uploaded_file)
             attributes = df.columns.values.tolist()
             GLOBAL_attributes = attributes
-            GLOBAL_df = df
+            GLOBAL_uploaded_file = uploaded_file
             print("attribute: " + GLOBAL_attributes)
             #request.sessions['df'] = df
             #request.sessions['attributes'] = attributes

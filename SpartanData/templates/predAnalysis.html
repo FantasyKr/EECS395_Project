@@ -41,8 +41,11 @@
 						<br>
 						<br>
 						<h3>Select Attribute</h3>
-						<select id="attributeSel" name="attributeSelection"></select>
-						<button type="button">Create Model</button>
+							<h5 id="attributes">{{ attributes }}</h5>
+  						<div id ="container"></div>
+							<div>
+    						<button id="submit">Select Attributes for Training</button>
+  						</div>
 						<!--<button type="button">Generate Graph</button> Create popup-->
 					</header>
 
@@ -58,6 +61,34 @@
 			</footer>
 
 		<!-- Scripts -->
+			<script>
+			$( document ).ready(function() {
+				var attributeClicked = false
+
+
+
+				$('#submit').click(function (){
+					document.getElementById('attributes');
+					var checkbox = document.createElement('input')
+					console.log(select);
+					console.log(typeof select);
+					var newOptions = select.replace(/['"]+/g,'').replace('[','').replace(']','').replace(' ','').split(",");
+					console.log(newOptions);
+					var selectedOption = newOptions[0];
+
+					var select2 = document.getElementById("attributeSel");
+					if (attributeClicked == false) {
+						$.each(newOptions, function(text, value) {
+							select2.appendChild(new Option(value, value));
+						});
+					}
+
+					attributeClicked = true
+					console.log(selectedOption);
+				});
+			});
+			</script>
+
 			<script src="{% static 'assets/js/jquery.min.js' %}"></script>
 			<script src="{% static 'assets/js/skel.min.js' %}"></script>
 			<script src="{% static 'assets/js/util.js' %}"></script>
