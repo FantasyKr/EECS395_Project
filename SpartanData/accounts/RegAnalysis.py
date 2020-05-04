@@ -29,8 +29,7 @@ def mean(df, attr_index):
     if check_dtype(attr_index):
         mean_val = df[attributes[attr_index]].mean(skipna = True)
         std_val = df[attributes[attr_index]].std(skipna = True)
-        #return 'The calculated mean over the %s attribute is %s, with standard deviation %s.' % (attributes[attr_index], mean_val, std_val)
-        return mean_val, std_val
+        return 'The calculated mean over the %s attribute is %s, with standard deviation %s.' % (attributes[attr_index], mean_val, std_val)
     else:
         return 'A mean value cannot be calculated due to inappropriate data type.'
 
@@ -41,8 +40,7 @@ def median(df, attr_index):
     attributes = attribute_list(df)
     if check_dtype(attr_index):
         median_val = df[attributes[attr_index]].median(skipna = True)
-        #return 'The calculated median over the %s attribute is %s.' % (attributes[attr_index], median_val)
-        return median_val
+        return 'The calculated median over the %s attribute is %s.' % (attributes[attr_index], median_val)
     else:
         return 'A median value cannot be calculated due to inappropriate data type.'
 
@@ -53,8 +51,7 @@ def mode(df, attr_index):
     attributes = attribute_list(df)
     modes = df[attributes[attr_index]].mode(dropna = True).values
     if modes.size > 1:
-        #return 'The calculated modes over the %s attribute are %s.' % (attributes[attr_index], str(modes)[1:-1])
-        return modes[1:-1]
+        return 'The calculated modes over the %s attribute are %s.' % (attributes[attr_index], str(modes)[1:-1])
     else:
         return 'The calculated mode over the %s attribute is %s.' % (attributes[attr_index], str(modes)[1:-1])
 
@@ -65,8 +62,7 @@ def minmax(df, attr_index):
     if check_dtype(attr_index):
         min_val = df[attributes[attr_index]].min(skipna = True)
         max_val = df[attributes[attr_index]].max(skipna = True)
-        #return 'The calculated minimum over the %s attribute is %s. The calculated max is %s' % (attributes[attr_index], min_val, max_val)
-        return min_val, max_val
+        return 'The calculated minimum over the %s attribute is %s. The calculated max is %s' % (attributes[attr_index], min_val, max_val)
     else:
         return 'A minimum/maximum value cannot be calculated due to inappropriate data type.'
 
