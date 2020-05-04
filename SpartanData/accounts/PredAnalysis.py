@@ -17,6 +17,8 @@ sns.set(style="darkgrid")
 
 # This prep method should be run on a dataset before any model.
 def data_prep(df):
+    num_attributes = attribute_list(df)
+    df = df.iloc[:,num_attributes]
     df = df.fillna(value=0)
     replace_values = {'negative':0, 'positive':1, 'f':0, 't':1}
     df = df.replace(to_replace=replace_values)
@@ -27,7 +29,12 @@ def methodA(value):
     return some_variable
 # This method returns a list of attributes from the dataframe.
 def attribute_list(df):
-    return list(df)
+    num_attributes = []
+    attributes = list(df)
+    for attribute in attributes:
+        if is_numeric_dtype(df[attribute]):
+            num_attributes.append(attribute)
+    return num_attributes
 
 # Example code for running a model:
 # df = pd.read_csv('Jan_2019_ontime.csv', skip_blank_lines = True)
