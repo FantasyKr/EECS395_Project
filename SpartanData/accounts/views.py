@@ -11,7 +11,7 @@ from .tokens import account_activation_token
 from django.template.loader import render_to_string
 from pandas.api.types import is_numeric_dtype
 import pandas as pd
-from .RegAnalysis import attribute_list, mean, median, mode
+from .RegAnalysis import attribute_list, mean, median, mode, csv_json
 from .forms import SignUpForm
 from django.contrib.auth.forms import AuthenticationForm
 from .tokens import account_activation_token
@@ -54,7 +54,6 @@ def predAnalysis(request):
     return render(request, 'predAnalysis.html', context)
 
 def regAnalysis(request):
-    def regAnalysis(request):
     global GLOBAL_df, GLOBAL_attributes
     uploaded_file = GLOBAL_df
     attributes = GLOBAL_attributes
@@ -161,6 +160,7 @@ def dashboard(request):
                 redirected = True
                 raise Exception('Invalid Uploaded File. Make sure it is a csv file.')
             df = pd.read_csv(uploaded_file)
+            GLOBAL_df = df
             attributes = df.columns.values.tolist()
             GLOBAL_attributes = attributes
             GLOBAL_uploaded_file = uploaded_file
@@ -188,6 +188,7 @@ def dashboardResubmit(request):
                 print(uploaded_file.size)
                 raise Exception('Invalid Uploaded File. Make sure it is a csv file.')
             df = pd.read_csv(uploaded_file)
+            GLOBAL_df = df
             attributes = df.columns.values.tolist()
             GLOBAL_attributes = attributes
             GLOBAL_uploaded_file = uploaded_file

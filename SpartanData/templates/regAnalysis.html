@@ -39,10 +39,6 @@
 						<br>
 						<select id="attributeSel" name="attributeSelection">{{attributes}}</select>
 						<br>
-						<h3> Select Range</h3>
-						<br>
-						<input type="range" multiple value="0, 100" />
-						<br>
 						<input type="submit" class="btn" value="Mean" id="meanbtn" name="meanbtn">
 						<div id="mean"></div>
 						<br>
@@ -236,6 +232,20 @@
 						
 						var newOptions = "{{ mean }}".replace(/['"]+/g,'').replace('[','').replace(']','').replace(' ','').split(",");
 						var select2 = document.getElementById("mean");
+						var selected = document.getElementById("attributeSel").value;
+						select2.innerHTML = newOptions[selected]
+					});
+					$('#medianbtn').click(function (){
+						
+						var newOptions = "{{ median }}".replace(/['"]+/g,'').replace('[','').replace(']','').replace(' ','').split(",");
+						var select2 = document.getElementById("median");
+						var selected = document.getElementById("attributeSel").value;
+						select2.innerHTML = newOptions[selected]
+					});
+					$('#modebtn').click(function (){
+						
+						var newOptions = "{{ mode }}".replace(/['"]+/g,'').replace('[','').replace(']','').replace(' ','').split(",");
+						var select2 = document.getElementById("mode");
 						var selected = document.getElementById("attributeSel").value;
 						select2.innerHTML = newOptions[selected]
 					});
