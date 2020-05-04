@@ -32,7 +32,18 @@
 			<section id="main" class="wrapper">
 				<div class="container">
 					<header class="major special">
-						<button type="button">Generate Graph</button> <!--Creeate popup-->
+						<h3>Model Selection</h3>
+						<select id="modelSel" name="modelSelection">
+							<option value="Random Forest">Random Forest</option>
+  							<option value="KNN Clustering">KNN Clustering</option>
+							  <option value="Naive Bayes">Naive Bayes</option>
+						</select>
+						<br>
+						<br>
+						<h3>Select Attribute</h3>
+						<select id="attributeSel" name="attributeSelection"></select>
+						<button type="button">Create Model</button>
+						<!--<button type="button">Generate Graph</button> Create popup-->
 					</header>
 
 		<!-- Footer -->
