@@ -34,7 +34,7 @@
 				<div class="container">
 					<header class="major special">
 						<button id="myClickButton" type="button">Click</button>
-						<div id="myOutput"></div>
+						<!--<div id="myOutput"></div>-->
 						<h3>Model Selection</h3>
 						<select id="modelSel" name="modelSelection">
 							<option value="Random Forest">Random Forest</option>
@@ -46,13 +46,13 @@
 						<h3>Select Attribute</h3>
 							<select id="attributeSel" multiple>{{attributes}} </select>
 							<div id="attributes" style="display: none;">{{ attributes }}</div>
-  								<!--<div id ="container">
-								<div>
-								<button id="submit">Select Attributes for Training</button>
-  							</div>
-							</div>-->
-							<button id="submitRequest">Submit Model and Attributes</button>
-						<!--<button type="button">Generate Graph</button> Create popup-->
+						<br>
+						<h3> Select Feature</h3>
+							<select id="featureSel" multiple>{{attributes}} </select>
+							<div id="features" style="display: none;">{{ attributes }}</div>
+						<br>
+						<button id="submitRequest" type="button">Submit Model and Attributes</button>
+						<div id="myOutput"></div>
 					</header>
 
 		<!-- Footer -->
@@ -96,35 +96,30 @@
 						console.log(selectedOption);
 					});
 
-
-					$('#submit').click(function () {
-						var unparsedAttributes = document.getElementById('attributes').innerHTML;
-						var newOptions = unparsedAttributes.replace(/['"]+/g,'').replace('[','').replace(']','').replace(' ','').split(",");
+					$('#featureSel').click(function (){
+						var select = document.getElementById("featureSel").innerHTML;
+						console.log(select);
+						console.log(typeof select);
+						var newOptions = select.replace(/['"]+/g,'').replace('[','').replace(']','').replace(' ','').split(",");
 						console.log(newOptions);
+						var selectedOption = newOptions[0];
 
-						if(attributeClicked == false) {
+						var select2 = document.getElementById("featureSel");
+						if (attributeClicked == false) {
 							$.each(newOptions, function(text, value) {
-								var checkbox = document.createElement('input');
-								checkbox.type = 'checkbox';
-								checkbox.id = value;
-								checkbox.value = value;
-
-								var label = document.createElement('label');
-								label.htmlFor = 'car';
-								label.appendChild(document.createTextNode(value));
-								var br = document.createElement('br');
-
-								var container = document.getElementById('container');
-								container.appendChild(checkbox);
-								container.appendChild(label);
-								container.appendChild(br);
+								select2.appendChild(new Option(value, text));
 							});
 						}
+					
+						attributeClicked = true
+						console.log(selectedOption);
+					});
 
-						attributeClicked = true;
-						var buttonDiv = document.getElementById('submit');
-		        buttonDiv.parentNode.removeChild(buttonDiv);
-						});
+					$("#submitRequest").click(function(){
+						var modelType = document.getElementById("modelSel").value;
+						var selected = document.getElementById("attributeSel").value;
+						console.log(selected);
+					})
 					});
 			</script>
 
