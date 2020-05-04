@@ -11,7 +11,7 @@ from .tokens import account_activation_token
 from django.template.loader import render_to_string
 from pandas.api.types import is_numeric_dtype
 import pandas as pd
-from .RegAnalysis import attribute_list, mean, median, mode
+from .RegAnalysis import attribute_list, mean, median, mode, csv_json
 from .forms import SignUpForm
 from django.contrib.auth.forms import AuthenticationForm
 from .tokens import account_activation_token
@@ -23,7 +23,6 @@ import json
 
 GLOBAL_df = None
 GLOBAL_attributes = None
-GLOBAL_uploaded_file = None
 
 def home_view(request):
     return render(request, 'login_home.html')
@@ -46,7 +45,7 @@ def predAnalysis(request):
 def regAnalysis(request):
     global GLOBAL_df, GLOBAL_attributes, GLOBAL_uploaded_file
     attributes = GLOBAL_attributes
-    uploaded_file = GLOBAL_uploaded_file
+    uploaded_file = csv_json(GLOBAL_df)
     index = 0
     mean = 0
     median = 0
@@ -54,6 +53,7 @@ def regAnalysis(request):
     minRange = 1
     maxRange = 100
     print(attributes)
+    print(uploaded_file)
 
     if(request.GET.get('meanbtn')):
         mean = RegAnalysis.mean(GLOBAL_df,index)
@@ -155,7 +155,7 @@ def dashboard(request):
             df = pd.read_csv(uploaded_file)
             attributes = df.columns.values.tolist()
             GLOBAL_attributes = attributes
-            GLOBAL_uploaded_file = uploaded_file
+            GLOBAL_df = df
             print(GLOBAL_attributes)
             #request.sessions['df'] = df
             #request.sessions['attributes'] = attributes
@@ -182,7 +182,7 @@ def dashboardResubmit(request):
             df = pd.read_csv(uploaded_file)
             attributes = df.columns.values.tolist()
             GLOBAL_attributes = attributes
-            GLOBAL_uploaded_file = uploaded_file
+            GLOBAL_df = df
             print("attribute: " + GLOBAL_attributes)
             #request.sessions['df'] = df
             #request.sessions['attributes'] = attributes

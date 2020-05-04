@@ -10,6 +10,8 @@ sns.set(style="darkgrid")
 def attribute_list(df):
     return list(df)
 
+def csv_json(df):
+    return df.to_json(orient='values')
 
 # This is a helper method for checking attribute data types.
 def check_dtype(df, attr_index):

@@ -39,7 +39,6 @@
 						<br>
 						<select id="attributeSel" name="attributeSelection">{{attributes}}</select>
 						<br>
-						<div id=testDIV> hello </div>
 						<h3> Select Range</h3>
 						<br>
 						<input type="range" multiple value="0, 100" />
@@ -83,6 +82,8 @@
 										<form id="LineForm" method="post">
 											{% csrf_token %}
 											Title: <input type="text" placeholder = "title" id="linetitle" size="1"/>
+											X: <select id="xlineattributeSel">{{attributes}}</select>
+											Y: <select id="ylineattributeSel" name="lineattributeSelection">{{attributes}}</select>
 											X-Axis Title:<input type="text" placeholder = "x-axis title" id="lineXAxisTitle" size="1"/>
 											Y-Axis Title: <input type="text" placeholder = "y-axis title" id="lineYAxisTitle" size="1"/>
 											Theme: <select id="lineTheme" name="Themes" form="themeform">
@@ -111,6 +112,7 @@
 										<form id="BarForm" method="post">
 											{% csrf_token %}
 											Title: <input type="text" placeholder = "title" id="bartitle" size="1"/>
+											Attribute: <select id="barattributeSel" name="barattributeSelection">{{attributes}}</select>
 											Y-Axis Title: <input type="text" placeholder = "y axis title" id="barYAxisTitle" size="1"/>
 											Theme: <select id="barTheme" name="Themes" form="themeform">
 												<option value="light1">Light 1</option>
@@ -137,12 +139,7 @@
 									<div class="modal-body">
 										<form id="DonutForm" method="post">
 											{% csrf_token %}
-											Attribute: <select id="donutAttribute" name="attribute" required>
-												<option value="light1">Light 1</option>
-												<option value="light2">Light 2</option>
-												<option value="dark1">Dark 1</option>
-												<option value="dark2">Dark 2</option>
-											</select>
+											Attribute: <select id="donutattributeSel" name="donutattributeSelection">{{attributes}}</select>
 											Title: <input type="text" placeholder = "title" id="donuttitle" size="1"/>
 											Theme: <select id="donutTheme" name="Themes">
 												<option value="light1">Light 1</option>
@@ -169,6 +166,8 @@
 										<form id="ScatterForm" method="post" >
 											{% csrf_token %}
 											Title: <input type="text" placeholder = "title" id="scattertitle" size="1"/>
+											X: <select id="xscatterattributeSel" name="scatterattributeSelection">{{attributes}}</select>
+											Y: <select id="yscatterattributeSel" name="scatterattributeSelection">{{attributes}}</select>
 											X-Axis Title: <input type="text" placeholder = "x-axis title" id="scatterXAxisTitle" size="1"/>
 											Y-Axis Title: <input type="text" placeholder = "y axis title" id="scatterYAxisTitle" size="1"/>
 											Theme: <select id="scatterTheme" name="Themes" form="themeform">
@@ -199,6 +198,221 @@
 				</div>
 			</footer>
 
+			<script>
+				$( document ).ready(function() {   
+					var url = "https://canvasjs.com/services/data/datapoints.php?xstart=1&ystart=10&length=100&type=json";
+					var modalMaster = document.getElementById('myMasterModal');
+					var modalLine = document.getElementById('myLineModal');
+					var modalBar = document.getElementById('myBarModal');
+					var modalDonut = document.getElementById('myDonutModal');
+					var modalScatter = document.getElementById('myScatterModal');
+					var attributeClicked = false
+					var barattributeClicked = false
+					var masterAttributeClicked = false
+					var xscatterattributeClicked = false
+					var yscatterattributeClicked = false
+					var xlineattributeClicked = false
+					var ylineattributeClicked = false
+					var donutattributeClicked = false
+					
+					$('#attributeSel').click(function (){
+						var select = document.getElementById("attributeSel").innerHTML;
+						console.log(select);
+						console.log(typeof select);
+						var newOptions = select.replace(/['"]+/g,'').replace('[','').replace(']','').replace(' ','').split(",");
+						console.log(newOptions);
+						var selectedOption = newOptions[0];
+
+						var select2 = document.getElementById("attributeSel");
+						if (attributeClicked == false) {
+							$.each(newOptions, function(text, value) {
+								select2.appendChild(new Option(value, value));
+							});
+						}
+					
+						attributeClicked = true
+						console.log(selectedOption);
+					});
+
+					$('#myMasterBtn').click(function (){
+						if (masterAttributeClicked == false) {
+							console.log("clickedMasterBtn");
+							var select = document.getElementById("barattributeSel").innerHTML;
+							var newOptions = select.replace(/['"]+/g,'').replace('[','').replace(']','').replace(' ','').split(",");
+							console.log(newOptions);
+
+							var xline = document.getElementById("xlineattributeSel");
+							var yline = document.getElementById("ylineattributeSel");
+							$.each(newOptions, function(index, value) {
+								var opt = new Option(value, index);
+								donut.appendChild(opt);
+								xline.appendChild(opt);
+								yline.appendChild(opt);
+							});
+						}
+					
+						masterAttributeClicked = true
+					});
+				
+					$('#barattributeSel').click(function (){
+						var select = document.getElementById("barattributeSel");
+						var newOptions = select.innerHTML.replace(/['"]+/g,'').replace('[','').replace(']','').replace(' ','').split(",");
+						if (barattributeClicked == false) {
+							$.each(newOptions, function(index, value) {
+								select.appendChild(new Option(value, index));
+							});
+						}
+						barattributeClicked = true
+					});
+					$('#donutattributeSel').click(function (){
+						var select = document.getElementById("donutattributeSel");
+						var newOptions = select.innerHTML.replace(/['"]+/g,'').replace('[','').replace(']','').replace(' ','').split(",");
+						if (donutattributeClicked == false) {
+							$.each(newOptions, function(index, value) {
+								select.appendChild(new Option(value, index));
+							});
+						}
+						donutattributeClicked = true
+					});
+					$('#xscatterattributeSel').click(function (){
+						var select = document.getElementById("xscatterattributeSel");
+						var newOptions = select.innerHTML.replace(/['"]+/g,'').replace('[','').replace(']','').replace(' ','').split(",");
+						if (xscatterattributeClicked == false) {
+							$.each(newOptions, function(index, value) {
+								select.appendChild(new Option(value, index));
+							});
+						}
+						xscatterattributeClicked = true
+					});
+					$('#yscatterattributeSel').click(function (){
+						var select = document.getElementById("yscatterattributeSel");
+						var newOptions = select.innerHTML.replace(/['"]+/g,'').replace('[','').replace(']','').replace(' ','').split(",");
+						if (yscatterattributeClicked == false) {
+							$.each(newOptions, function(index, value) {
+								select.appendChild(new Option(value, index));
+							});
+						}
+						yscatterattributeClicked = true
+					});
+					$('#xlineattributeSel').click(function (){
+						var select = document.getElementById("xlineattributeSel");
+						var newOptions = select.innerHTML.replace(/['"]+/g,'').replace('[','').replace(']','').replace(' ','').split(",");
+						if (xlineattributeClicked == false) {
+							$.each(newOptions, function(index, value) {
+								select.appendChild(new Option(value, index));
+							});
+						}
+						xlineattributeClicked = true
+					});
+					$('#ylineattributeSel').click(function (){
+						var select = document.getElementById("ylineattributeSel");
+						var newOptions = select.innerHTML.replace(/['"]+/g,'').replace('[','').replace(']','').replace(' ','').split(",");
+						if (ylineattributeClicked == false) {
+							$.each(newOptions, function(index, value) {
+								select.appendChild(new Option(value, index));
+							});
+						}
+						ylineattributeClicked = true
+					});
+
+					var barfrm = $('#BarForm');
+					$('#BarForm').submit(function () {
+						var dataPoints = [];
+						console.log("creating bar form");
+
+						$.ajax({
+							type: barfrm.attr('method'),
+							url: barfrm.attr('action'),
+							data: $("#BarForm").serialize(),
+							success: function (formData) {	
+								var data = JSON.parse("{{uploaded_file}}".replace(/&quot;/g,"\""));
+								console.log("making bar graph");
+								console.log($('#barattributeSel').val())
+								$.each(data, function(key, value){ // <=== Note, `data.results`, not just `data`
+									dataPoints.push({y: value[$('#barattributeSel').val()]});// <=== Or `entry.from_user` would also work (although `entry['from_user']` is just fine)
+								});
+								barchart(dataPoints, true, $('#barTheme').val(), $('#bartitle').val() , $('#barYAxisTitle').val());
+							}
+						});
+						//close the modal
+						modalBar.style.display = "none";
+						modalMaster.style.display = "none";
+						return false;
+					});
+
+					var donutfrm = $('#DonutForm');
+					$('#DonutForm').submit(function () {
+						var dataPoints = [];
+						console.log("creating donut graph");
+
+						$.ajax({
+							type: donutfrm.attr('method'),
+							url: donutfrm.attr('action'),
+							data: $("#DonutForm").serialize(),
+							success: function (formData) {	
+								var data = JSON.parse("{{uploaded_file}}".replace(/&quot;/g,"\""));
+								console.log("making donut graph");;
+								$.each(data, function(key, value){ // <=== Note, `data.results`, not just `data`
+									dataPoints.push({y: value[$('#donutattributeSel').val()]});// <=== Or `entry.from_user` would also work (although `entry['from_user']` is just fine)
+								});
+								donutchart(dataPoints, true,  $('#donutTheme').val(), $('#donuttitle').val());
+							}
+						});
+						//close the modal
+						modalDonut.style.display = "none";
+						modalMaster.style.display = "none";
+						return false;
+					});
+
+					var scatterfrm = $('#ScatterForm');
+					$('#ScatterForm').submit(function () {
+						var dataPoints = [];
+						console.log("creating donut graph");
+
+						$.ajax({
+							type: scatterfrm.attr('method'),
+							url: scatterfrm.attr('action'),
+							data: $("#ScatterForm").serialize(),
+							success: function (formData) {	
+								var data = JSON.parse("{{uploaded_file}}".replace(/&quot;/g,"\""));
+								console.log("making scatter graph");
+								console.log($('#xscatterattributeSel').val())
+								console.log( parseInt($('#yscatterattributeSel').val()))
+								$.each(data, function(key, value){ // <=== Note, `data.results`, not just `data`
+									dataPoints.push({x: value[$('#xscatterattributeSel').val()], y: parseInt(value[$('#yscatterattributeSel').val()])});// <=== Or `entry.from_user` would also work (although `entry['from_user']` is just fine)
+								});
+								scatterchart(dataPoints, true,  $('#scatterTheme').val(), $('#scattertitle').val(), $('#scatterXAxisTitle').val(), $('#scatterYAxisTitle').val());
+							}
+						});
+						//close the modal
+						modalScatter.style.display = "none";
+						modalMaster.style.display = "none";
+						return false;
+					});
+
+					var frm = $('#LineForm');
+					$('#LineForm').submit(function () {
+						var dataPoints = [];
+						$.ajax({
+							type: frm.attr('method'),
+							url: frm.attr('action'),
+							data: $("#LineForm").serialize(),
+							success: function (formData) {	
+								var data = JSON.parse("{{uploaded_file}}".replace(/&quot;/g,"\""));
+								console.log("making line graph");
+								$.each(data, function(key, value){ // <=== Note, `data.results`, not just `data`
+									dataPoints.push({x: value[$('#xlineattributeSel').val()], y: parseInt(value[$('#ylineattributeSel').val()])});// <=== Or `entry.from_user` would also work (although `entry['from_user']` is just fine)
+								});
+								linechart(dataPoints, true, $('#lineTheme').val(), $('#linetitle').val() , $('#lineXAxisTitle').val(), $('#lineYAxisTitle').val());
+							}
+						});
+						//close the modal
+						modalLine.style.display = "none";
+						modalMaster.style.display = "none";
+						return false;
+					});
+				});
+			</script>
 		<!-- Scripts -->
 			<script src="{% static 'assets/js/jquery.min.js' %}"></script>
 			<script src="{% static 'assets/js/skel.min.js' %}"></script>
