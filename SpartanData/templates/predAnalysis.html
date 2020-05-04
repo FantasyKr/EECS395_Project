@@ -69,7 +69,7 @@
 				$( document ).ready(function() {
 					var attributeClicked = false
 					var featureClicked = false
-					
+
 					$("#myClickButton").click(function() {
     					$.get("/output/", function(data) {
        						 $("#myOutput").html(data);
@@ -90,7 +90,7 @@
 								select2.appendChild(new Option(value, text));
 							});
 						}
-					
+
 						attributeClicked = true
 						console.log(selectedOption);
 					});
@@ -109,16 +109,19 @@
 								select2.appendChild(new Option(value, text));
 							});
 						}
-					
+
 						featureClicked = true
 						console.log(selectedOption);
 					});
 
-					$("#submitRequest").click(function(){
+					$("#submitRequest").click(function() {
 						var modelType = document.getElementById("modelSel").value;
-						var selectAtt = document.getElementById("attributeSel").value; //Will give index of attribute desired
-						var selectFeat = document.getElementById("featureSel").value; 
-						console.log(selectFeat);
+						var selectAtt = document.getElementById("attributeSel").value;
+						console.log("1"); //Will give index of attribute desired
+						var values = $('#featureSel').val();
+						console.log(modelType);
+						console.log(selectAtt);
+						console.log(values);
 					})
 					});
 			</script>
