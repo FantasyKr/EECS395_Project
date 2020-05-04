@@ -43,15 +43,14 @@
 						<br>
 						<input type="range" multiple value="0, 100" />
 						<br>
-						<input type="submit" class="btn" value="Mean" name="meanbtn">
-						<h3>{{ mean }}</h3>
+						<input type="submit" class="btn" value="Mean" id="meanbtn" name="meanbtn">
+						<div id="mean"></div>
 						<br>
-						<input type="submit" class="btn" value="Median" name="medianbtn">
-						<h3> {{ median }} </h3>
+						<input type="submit" class="btn" value="Median" name="medianbtn" id="medianbtn">
+						<div id="median"></div>
 						<br>
-						<input type="submit" class="btn" value="Mode" name="modebtn">
-						<h3> {{ mode }} </h3>
-						<br>
+						<input type="submit" class="btn" value="Mode" name="modebtn" id="modebtn">
+						<div id="mode"></div>
 						<br>
 						<!-- Trigger/Open The Modal -->
 						<button id="myMasterBtn">Create Graph</button>
@@ -226,12 +225,19 @@
 						var select2 = document.getElementById("attributeSel");
 						if (attributeClicked == false) {
 							$.each(newOptions, function(text, value) {
-								select2.appendChild(new Option(value, value));
+								select2.appendChild(new Option(value, text));
 							});
 						}
 					
 						attributeClicked = true
 						console.log(selectedOption);
+					});
+					$('#meanbtn').click(function (){
+						
+						var newOptions = "{{ mean }}".replace(/['"]+/g,'').replace('[','').replace(']','').replace(' ','').split(",");
+						var select2 = document.getElementById("mean");
+						var selected = document.getElementById("attributeSel").value;
+						select2.innerHTML = newOptions[selected]
 					});
 
 					$('#myMasterBtn').click(function (){

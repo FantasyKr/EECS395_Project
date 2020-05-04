@@ -29,7 +29,7 @@ def mean(df, attr_index):
     if check_dtype(df, attr_index):
         mean_val = df[attributes[attr_index]].mean(skipna = True)
         std_val = df[attributes[attr_index]].std(skipna = True)
-        return 'The calculated mean over the %s attribute is %s, with standard deviation %s.' % (attributes[attr_index], mean_val, std_val)
+        return 'The calculated mean over the %s attribute is %s with standard deviation %s.' % (attributes[attr_index], mean_val, std_val)
     else:
         return 'A mean value cannot be calculated due to inappropriate data type.'
 
