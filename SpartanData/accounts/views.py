@@ -54,40 +54,34 @@ def predAnalysis(request):
     return render(request, 'predAnalysis.html', context)
 
 def regAnalysis(request):
-    global GLOBAL_df, GLOBAL_attributes, GLOBAL_uploaded_file
+    def regAnalysis(request):
+    global GLOBAL_df, GLOBAL_attributes
+    uploaded_file = GLOBAL_df
     attributes = GLOBAL_attributes
-    uploaded_file = GLOBAL_uploaded_file
     attribute_means = []
     attribute_count = 0
-    index = 0
-    mean = 0
-    median = 0
-    mode = []
+    attribute_medians = []
+    attribute_modes = []
     minRange = 1
     maxRange = 100
-    print(attributes)
 
-    if(request.GET.get('meanbtn')):
-        mean = RegAnalysis.mean(GLOBAL_df,index)
+    for attribute in attributes: 
+        attribute_means.append(mean(uploaded_file, attribute_count))
+        attribute_medians.append(median(uploaded_file, attribute_count))
+        attribute_modes.append(mode(uploaded_file, attribute_count))
+        attribute_count = attribute_count + 1
 
-    if(request.GET.get('modebtn')):
-        mode = RegAnalysis.mode(GLOBAL_df,index)
-
-    if(request.GET.get('medianbtn')):
-        median = RegAnalysis.median(GLOBAL_df, index)
-
-
-    median = RegAnalysis.mean(Global_df, index)
     context = {
-        'uploaded_file': uploaded_file,
+        'uploaded_file': csv_json(uploaded_file),
         'attributes': attributes,
-        'mean': mean,
-        'mode': mode,
-        'median': median,
+        'mean': attribute_means,
+        'mode': attribute_modes, 
+        'median': attribute_medians,
         'minRange': minRange,
         'maxRange': maxRange,
     }
     return render(request, 'regAnalysis.html' , context)
+
 
 def signup_view(request):
     if request.method  == 'POST':
