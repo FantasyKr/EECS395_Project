@@ -31,15 +31,16 @@ def attribute_list(df):
 # df = pd.read_csv('Jan_2019_ontime.csv', skip_blank_lines = True)
 # df = data_prep(df)
 # feature_list = [0,1,6,13,14,18]
-# rand_forest(df, 17, feature_list)
 
+# An array is returned with the numeric metrics and a file 
+# 'confusion_matrix.png' holding the confusion matrix is saved.
 
 # This method receives a dataframe, the index of the attribute
 # we are predicting, and a list of indices of features we want
 # to train the model on. These indices are based off of the list
 # produced by attribute_list(). A random forest model is then used 
 # to train and label the data. The method returns two metric values
-# (accuracy and ROC AUC score) and a confusion matrix.
+# (accuracy and ROC AUC score) and a confusion matrix in a png file.
 def rand_forest(df, pred_attr_index, feature_list):
     X = df.iloc[:,feature_list]
     y = df.iloc[:,pred_attr_index]
@@ -48,19 +49,16 @@ def rand_forest(df, pred_attr_index, feature_list):
     classifier = model.fit(X_train,y_train)
     y_predicted = model.predict(X_test)
 
-    print("Accuracy (in percentage) of Random Forest Model:")
-    print(accuracy_score(y_test,y_predicted)*100)
-    print("ROC AUC score (this metric measures the probability that a correct label is preferred over an incorrect label):")
-    print(roc_auc_score(y_test,y_predicted))
+    a_string = "Accuracy (in percentage) of Random Forest Model: "
+    accuracy = str(accuracy_score(y_test,y_predicted)*100)
+    r_string = "ROC AUC score (this metric measures the probability that a correct label is preferred over an incorrect label): "
+    ROC = str(roc_auc_score(y_test,y_predicted))
 
     # Plot normalized confusion matrix
-    titles_options = [("Normalized confusion matrix", 'true')]
-    for title, normalize in titles_options:
-        disp = plot_confusion_matrix(classifier, X_test, y_test,
-                                     cmap=plt.cm.Blues,
-                                     normalize=normalize)
-        disp.ax_.set_title(title)
-        print(title)
+    disp = plot_confusion_matrix(classifier, X_test, y_test, 
+                                 cmap=plt.cm.Blues,normalize='true').ax_.set_title("Normalized confusion matrix")
+    plt.savefig('confusion_matrix.png')
+    return [a_string + accuracy, r_string + ROC]
 
 
 # This method receives a dataframe, the index of the attribute
@@ -68,7 +66,7 @@ def rand_forest(df, pred_attr_index, feature_list):
 # to train the model on. These indices are based off of the list
 # produced by attribute_list(). A K Nearest Neighbors clustering
 # model is then used to train and label the data. The method returns
-# two metric values (accuracy and ROC AUC score) and a confusion matrix.
+# two metric values (accuracy and ROC AUC score) and a confusion matrix in a png file.
 def k_neighbors(df, pred_attr_index, feature_list):
     X = df.iloc[:,feature_list]
     y = df.iloc[:,pred_attr_index]
@@ -77,28 +75,24 @@ def k_neighbors(df, pred_attr_index, feature_list):
     classifier = model.fit(X_train,y_train)
     y_predicted = model.predict(X_test)
     
-    print("Accuracy (in percentage) of K Nearest Neighbors Model")
-    print(accuracy_score(y_test,y_predicted)*100)
-    print("ROC AUC score (this metric measures the probability that a correct label is preferred over an incorrect label):")
-    print(roc_auc_score(y_test,y_predicted))
+    a_string = "Accuracy (in percentage) of K Nearest Neighbors Model: "
+    accuracy = str(accuracy_score(y_test,y_predicted)*100)
+    r_string = "ROC AUC score (this metric measures the probability that a correct label is preferred over an incorrect label): "
+    ROC = str(roc_auc_score(y_test,y_predicted))
 
-    
     # Plot normalized confusion matrix
-    titles_options = [("Normalized confusion matrix", 'true')]
-    for title, normalize in titles_options:
-        disp = plot_confusion_matrix(classifier, X_test, y_test,
-                                     cmap=plt.cm.Blues,
-                                     normalize=normalize)
-        disp.ax_.set_title(title)
-        print(title)
+    disp = plot_confusion_matrix(classifier, X_test, y_test, 
+                                 cmap=plt.cm.Blues,normalize='true').ax_.set_title("Normalized confusion matrix")
+    plt.savefig('confusion_matrix.png')
+    return [a_string + accuracy, r_string + ROC]
 
 
 # This method receives a dataframe, the index of the attribute
 # we are predicting, and a list of indices of features we want
 # to train the model on. These indices are based off of the list
 # produced by attribute_list(). A Gaussian Naive Bayes model is
-# then used to train and label the data. The method returns two
-# metric values (accuracy and ROC AUC score) and a confusion matrix.
+# then used to train and label the data. The method returns two 
+# metric values (accuracy and ROC AUC score) and a confusion matrix in a png file.
 def naive_bayes(df, pred_attr_index, feature_list):
     X = df.iloc[:,feature_list]
     y = df.iloc[:,pred_attr_index]
@@ -107,17 +101,13 @@ def naive_bayes(df, pred_attr_index, feature_list):
     classifier = model.fit(X_train,y_train)
     y_predicted = model.predict(X_test)
     
-    print("Accuracy (in percentage) of Gaussian Naive Bayes Model")
-    print(accuracy_score(y_test,y_predicted)*100)
-    print("ROC AUC score (this metric measures the probability that a correct label is preferred over an incorrect label):")
-    print(roc_auc_score(y_test,y_predicted))
+    a_string = "Accuracy (in percentage) of Gaussian Naive Bayes Model: "
+    accuracy = str(accuracy_score(y_test,y_predicted)*100)
+    r_string = "ROC AUC score (this metric measures the probability that a correct label is preferred over an incorrect label): "
+    ROC = str(roc_auc_score(y_test,y_predicted))
 
     # Plot normalized confusion matrix
-    titles_options = [("Normalized confusion matrix", 'true')]
-    for title, normalize in titles_options:
-        disp = plot_confusion_matrix(classifier, X_test, y_test,
-                                     cmap=plt.cm.Blues,
-                                     normalize=normalize)
-        disp.ax_.set_title(title)
-        print(title)
-
+    disp = plot_confusion_matrix(classifier, X_test, y_test, 
+                                 cmap=plt.cm.Blues,normalize='true').ax_.set_title("Normalized confusion matrix")
+    plt.savefig('confusion_matrix.png')
+    return [a_string + accuracy, r_string + ROC]
