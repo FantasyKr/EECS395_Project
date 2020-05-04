@@ -26,7 +26,7 @@ def check_dtype(df, attr_index):
 # over a selected attribute, given an attribute with an appropriate data type.
 def mean(df, attr_index):
     attributes = attribute_list(df)
-    if check_dtype(attr_index):
+    if check_dtype(df, attr_index):
         mean_val = df[attributes[attr_index]].mean(skipna = True)
         std_val = df[attributes[attr_index]].std(skipna = True)
         return 'The calculated mean over the %s attribute is %s, with standard deviation %s.' % (attributes[attr_index], mean_val, std_val)
@@ -38,7 +38,7 @@ def mean(df, attr_index):
 # given an attribute with an appropriate data type.
 def median(df, attr_index):
     attributes = attribute_list(df)
-    if check_dtype(attr_index):
+    if check_dtype(df, attr_index):
         median_val = df[attributes[attr_index]].median(skipna = True)
         return 'The calculated median over the %s attribute is %s.' % (attributes[attr_index], median_val)
     else:
@@ -59,7 +59,7 @@ def mode(df, attr_index):
 # given an attribute with an appropriate data type.
 def minmax(df, attr_index):
     attributes = attribute_list(df)
-    if check_dtype(attr_index):
+    if check_dtype(df, attr_index):
         min_val = df[attributes[attr_index]].min(skipna = True)
         max_val = df[attributes[attr_index]].max(skipna = True)
         return 'The calculated minimum over the %s attribute is %s. The calculated max is %s' % (attributes[attr_index], min_val, max_val)
@@ -83,11 +83,9 @@ def interval(df, low_perc, high_perc, attr_index):
             high_bound = int(len(df)*high_perc/100)
             return df_sort[low_bound:high_bound].copy()
         else:
-            print('Please enter valid percentile values.')
-            return null
+            print('Please enter valid percentile values.')   
     else:
         print('Dese not numbas.')
-        return null
 
 
 # This method takes in x and y attribute indices and creates a json file to be used in a line plot.
