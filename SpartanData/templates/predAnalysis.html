@@ -33,23 +33,25 @@
 			<section id="main" class="wrapper">
 				<div class="container">
 					<header class="major special">
+						<button id="myClickButton" type="button">Click</button>
+						<div id="myOutput"></div>
 						<h3>Model Selection</h3>
 						<select id="modelSel" name="modelSelection">
 							<option value="Random Forest">Random Forest</option>
   							<option value="KNN Clustering">KNN Clustering</option>
-							  <option value="Naive Bayes">Naive Bayes</option>
+							<option value="Naive Bayes">Naive Bayes</option>
 						</select>
 						<br>
-						<button id="myClickButton" type="button">Click</button>
-						<div id="myOutput"></div>
 						<br>
 						<h3>Select Attribute</h3>
+							<select id="attributeSel" multiple>{{attributes}} </select>
 							<div id="attributes" style="display: none;">{{ attributes }}</div>
-  						<div id ="container">
+  								<!--<div id ="container">
 								<div>
-    							<button id="submit">Select Attributes for Training</button>
+								<button id="submit">Select Attributes for Training</button>
   							</div>
-							</div>
+							</div>-->
+							<button id="submitRequest">Submit Model and Attributes</button>
 						<!--<button type="button">Generate Graph</button> Create popup-->
 					</header>
 
@@ -73,6 +75,25 @@
     					$.get("/output/", function(data) {
        						 $("#myOutput").html(data);
     					}, "html");
+					});
+
+					$('#attributeSel').click(function (){
+						var select = document.getElementById("attributeSel").innerHTML;
+						console.log(select);
+						console.log(typeof select);
+						var newOptions = select.replace(/['"]+/g,'').replace('[','').replace(']','').replace(' ','').split(",");
+						console.log(newOptions);
+						var selectedOption = newOptions[0];
+
+						var select2 = document.getElementById("attributeSel");
+						if (attributeClicked == false) {
+							$.each(newOptions, function(text, value) {
+								select2.appendChild(new Option(value, text));
+							});
+						}
+					
+						attributeClicked = true
+						console.log(selectedOption);
 					});
 
 
