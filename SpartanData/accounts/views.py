@@ -11,7 +11,7 @@ from .tokens import account_activation_token
 from django.template.loader import render_to_string
 from pandas.api.types import is_numeric_dtype
 import pandas as pd
-from .RegAnalysis import attribute_list, mean, median, mode, csv_json
+from .RegAnalysis import attribute_list, mean, median, mode, csv_json, attribute_list
 from .forms import SignUpForm
 from django.contrib.auth.forms import AuthenticationForm
 from .tokens import account_activation_token
@@ -47,12 +47,12 @@ def predAnalysis(request):
     attributes = GLOBAL_attributes
     uploaded_file = GLOBAL_uploaded_file
     method_object = ''
-    
+
     context = {
         'uploaded_file': uploaded_file,
         'attributes': attributes,
         'features': attributes,
-        
+
     }
     return render(request, 'predAnalysis.html', context)
 
@@ -64,7 +64,7 @@ def output(request):
     #context = {
      #   'uploaded_file': uploaded_file,
      #   'attributes': attributes,
-        
+
     #}
     return render(request, 'output.html', {'output': method_object})
 
@@ -79,7 +79,7 @@ def regAnalysis(request):
     minRange = 1
     maxRange = 100
 
-    for attribute in attributes: 
+    for attribute in attributes:
         attribute_means.append(mean(uploaded_file, attribute_count))
         attribute_medians.append(median(uploaded_file, attribute_count))
         attribute_modes.append(mode(uploaded_file, attribute_count))
@@ -89,7 +89,7 @@ def regAnalysis(request):
         'uploaded_file': csv_json(uploaded_file),
         'attributes': attributes,
         'mean': attribute_means,
-        'mode': attribute_modes, 
+        'mode': attribute_modes,
         'median': attribute_medians,
         'minRange': minRange,
         'maxRange': maxRange,
