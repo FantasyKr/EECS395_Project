@@ -23,6 +23,7 @@ import json
 
 GLOBAL_df = None
 GLOBAL_attributes = None
+GLOBAL_uploaded_file = None
 
 def home_view(request):
     return render(request, 'login_home.html')
@@ -43,8 +44,9 @@ def predAnalysis(request):
     return render(request, 'predAnalysis.html')
 
 def regAnalysis(request):
-    global GLOBAL_df, GLOBAL_attributes
+    global GLOBAL_df, GLOBAL_attributes, GLOBAL_uploaded_file
     attributes = GLOBAL_attributes
+    uploaded_file = GLOBAL_uploaded_file
     index = 0
     mean = 0
     median = 0
@@ -52,7 +54,7 @@ def regAnalysis(request):
     minRange = 0
     maxRange = 100
     print(attributes)
-    
+
     if(request.GET.get('meanbtn')):
         mean = RegAnalysis.mean(GLOBAL_df,index)
 
@@ -61,13 +63,14 @@ def regAnalysis(request):
 
     if(request.GET.get('medianbtn')):
         median = RegAnalysis.median(GLOBAL_df,index)
-    
+
     context = {
+        'uploaded_file': uploaded_file,
         'attributes': attributes,
         'mean': mean,
         'mode': mode, 
         'median': median,
-        'minRange': minRange, 
+        'minRange': minRange,
         'maxRange': maxRange,
     }
     return render(request, 'regAnalysis.html' , context)
@@ -152,6 +155,7 @@ def dashboard(request):
             df = pd.read_csv(uploaded_file)
             attributes = df.columns.values.tolist()
             GLOBAL_attributes = attributes
+            GLOBAL_uploaded_file = uploaded_file
             print(GLOBAL_attributes)
             #request.sessions['df'] = df
             #request.sessions['attributes'] = attributes
@@ -178,6 +182,7 @@ def dashboardResubmit(request):
             df = pd.read_csv(uploaded_file)
             attributes = df.columns.values.tolist()
             GLOBAL_attributes = attributes
+            GLOBAL_uploaded_file = uploaded_file
             print("attribute: " + GLOBAL_attributes)
             #request.sessions['df'] = df
             #request.sessions['attributes'] = attributes
