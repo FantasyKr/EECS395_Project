@@ -8,7 +8,7 @@ sns.set(style="darkgrid")
 
 # This method returns a list of attributes from the dataframe.
 def attribute_list(df):
-    return list(df)
+    return df.columns.values.tolist()
 
 def csv_json(df):
     return df.to_json(orient='values')

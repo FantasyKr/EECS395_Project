@@ -52,17 +52,15 @@ def regAnalysis(request):
     attribute_modes = []
     minRange = 1
     maxRange = 100
-    print(attributes)
-    print(uploaded_file)
 
     for attribute in attributes: 
-        attribute_means[attribute_count] = mean(uploaded_file, attribute_count)
-        attribute_medians[attribute_count] = median(uploaded_file, attribute_count)
-        attribute_modes[attribute_count] = mode(uploaded_file, attribute_count)
+        attribute_means.append(mean(uploaded_file, attribute_count))
+        attribute_medians.append(median(uploaded_file, attribute_count))
+        attribute_modes.append(mode(uploaded_file, attribute_count))
         attribute_count = attribute_count + 1
 
     context = {
-        'uploaded_file': uploaded_file,
+        'uploaded_file': csv_json(uploaded_file),
         'attributes': attributes,
         'mean': attribute_means,
         'mode': attribute_modes, 
