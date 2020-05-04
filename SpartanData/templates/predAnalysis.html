@@ -11,6 +11,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" type="text/css" href="{% static 'assets/css/main.css' %}" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	</head>
 	<body>
 
@@ -41,11 +42,12 @@
 						<br>
 						<br>
 						<h3>Select Attribute</h3>
-							<h5 id="attributes">{{ attributes }}</h5>
-  						<div id ="container"></div>
-							<div>
-    						<button id="submit">Select Attributes for Training</button>
-  						</div>
+							<div id="attributes" style="display: none;">{{ attributes }}</div>
+  						<div id ="container">
+								<div>
+    							<button id="submit">Select Attributes for Training</button>
+  							</div>
+							</div>
 						<!--<button type="button">Generate Graph</button> Create popup-->
 					</header>
 
@@ -62,31 +64,40 @@
 
 		<!-- Scripts -->
 			<script>
-			$( document ).ready(function() {
-				var attributeClicked = false
+				$( document ).ready(function() {
+					var attributeClicked = false
 
 
 
-				$('#submit').click(function (){
-					document.getElementById('attributes');
-					var checkbox = document.createElement('input')
-					console.log(select);
-					console.log(typeof select);
-					var newOptions = select.replace(/['"]+/g,'').replace('[','').replace(']','').replace(' ','').split(",");
-					console.log(newOptions);
-					var selectedOption = newOptions[0];
+					$('#submit').click(function () {
+						var unparsedAttributes = document.getElementById('attributes').innerHTML;
+						var newOptions = unparsedAttributes.replace(/['"]+/g,'').replace('[','').replace(']','').replace(' ','').split(",");
+						console.log(newOptions);
 
-					var select2 = document.getElementById("attributeSel");
-					if (attributeClicked == false) {
-						$.each(newOptions, function(text, value) {
-							select2.appendChild(new Option(value, value));
+						if(attributeClicked == false) {
+							$.each(newOptions, function(text, value) {
+								var checkbox = document.createElement('input');
+								checkbox.type = 'checkbox';
+								checkbox.id = value;
+								checkbox.value = value;
+
+								var label = document.createElement('label');
+								label.htmlFor = 'car';
+								label.appendChild(document.createTextNode(value));
+								var br = document.createElement('br');
+
+								var container = document.getElementById('container');
+								container.appendChild(checkbox);
+								container.appendChild(label);
+								container.appendChild(br);
+							});
+						}
+
+						attributeClicked = true;
+						var buttonDiv = document.getElementById('submit');
+		        buttonDiv.parentNode.removeChild(buttonDiv);
 						});
-					}
-
-					attributeClicked = true
-					console.log(selectedOption);
-				});
-			});
+					});
 			</script>
 
 			<script src="{% static 'assets/js/jquery.min.js' %}"></script>
