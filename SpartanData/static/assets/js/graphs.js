@@ -1,31 +1,34 @@
 /************************************************************************************
  * JSON retrieval
  ************************************************************************************/
-$( document ).ready(function() {   
+$( document ).ready(function() {
    var url = "https://canvasjs.com/services/data/datapoints.php?xstart=1&ystart=10&length=100&type=json";
    var modalMaster = document.getElementById('myMasterModal')
    var modalLine = document.getElementById('myLineModal');
    var modalBar = document.getElementById('myBarModal');
    var modalDonut = document.getElementById('myDonutModal');
    var modalScatter = document.getElementById('myScatterModal');
-   
-     var newOptions = "{{attributes}}";
-     var selectedOption = newOptions[0];
-  
-     var select = $('#attributeSel');
-     if(select.prop) {
-        var options = select.prop('options');
-     }
-     else {
-        var options = select.attr('options');
-     }
-     $('option', select).remove();
-  
-     $.each(newOptions, function(val, text) {
-        options[options.length] = new Option(text, val);
-     });
-  
-     select.val(selectedOption);
+   var attributeClicked = false
+
+   $('#attributeSel').click(function (){
+      var select = document.getElementById("attributeSel").innerHTML;
+      var select2 =  $('#attribute2').innerHTML;
+      console.log(select);
+      console.log(typeof select);
+      var newOptions = select.split(",");
+      console.log(newOptions);
+      var selectedOption = newOptions[0];
+
+      var select2 = document.getElementById("attributeSel");
+      if (attributeClicked == false) {
+         $.each(newOptions, function(text, value) {
+            select2.appendChild(new Option(value, text));
+         });
+      }
+
+      attributeClicked = true
+      console.log(selectedOption);
+   }); 
 
    var barfrm = $('#BarForm');
    $('#BarForm').submit(function () {
@@ -36,8 +39,8 @@ $( document ).ready(function() {
          type: barfrm.attr('method'),
          url: barfrm.attr('action'),
          data: $("#BarForm").serialize(),
-         success: function (formData) {	
-            $.getJSON('http://localhost:8000/regAnalysis/test.json&callback=?', function(data) {  
+         success: function (formData) {
+            $.getJSON('http://localhost:8000/regAnalysis/test.json&callback=?', function(data) {
                console.log("getting data");
                $.each(data, function(key, value){ // <=== Note, `data.results`, not just `data`
                   dataPoints.push({y: value[0], label: value[1]});// <=== Or `entry.from_user` would also work (although `entry['from_user']` is just fine)
@@ -61,8 +64,8 @@ $( document ).ready(function() {
          type: donutfrm.attr('method'),
          url: donutfrm.attr('action'),
          data: $("#DonutForm").serialize(),
-         success: function (formData) {	
-            $.getJSON(url, function(data) {  
+         success: function (formData) {
+            $.getJSON(url, function(data) {
                console.log("getting data for donut graph");
                $.each(data, function(key, value){ // <=== Note, `data.results`, not just `data`
                   dataPoints.push({y: value[0], label: value[1]});// <=== Or `entry.from_user` would also work (although `entry['from_user']` is just fine)
@@ -86,8 +89,8 @@ $( document ).ready(function() {
          type: scatterfrm.attr('method'),
          url: scatterfrm.attr('action'),
          data: $("#ScatterForm").serialize(),
-         success: function (formData) {	
-            $.getJSON(url, function(data) {  
+         success: function (formData) {
+            $.getJSON(url, function(data) {
                console.log("getting data for donut graph");
                $.each(data, function(key, value){ // <=== Note, `data.results`, not just `data`
                   dataPoints.push({x: value[0], y: parseInt(value[1])});// <=== Or `entry.from_user` would also work (although `entry['from_user']` is just fine)
@@ -109,8 +112,8 @@ $( document ).ready(function() {
          type: frm.attr('method'),
          url: frm.attr('action'),
          data: $("#LineForm").serialize(),
-         success: function (formData) {	
-            $.getJSON(url, function(data) {  
+         success: function (formData) {
+            $.getJSON(url, function(data) {
                $.each(data, function(key, value){ // <=== Note, `data.results`, not just `data`
                   dataPoints.push({x: value[0], y: parseInt(value[1])});// <=== Or `entry.from_user` would also work (although `entry['from_user']` is just fine)
                });
@@ -133,7 +136,7 @@ $( document ).ready(function() {
  * scatterchart()
  ************************************************************************************/
 
-/** 
+/**
  * linechart
  * @param isInteractive Boolean. true if want chart to be interactive
  * @param theme   String of desired theme. The options are : “light1″, ”light2”, “dark1”, or “dark2”
@@ -162,11 +165,11 @@ function linechart(data, isInteractive, theme, title, xAxisTitle, yAxisTitle) {
          dataPoints: data
       }]
    });
-   
+
    chart.render();
 }
 
-/** 
+/**
  * barchart
  * @param isInteractive Boolean. true if want chart to be interactive
  * @param theme   String of desired theme. The options are : “light1″, ”light2”, “dark1”, or “dark2”
@@ -185,15 +188,15 @@ function barchart(data, isInteractive, theme, title, yAxisTitle){
       axisY: {
          title: yAxisTitle
       },
-      data: [{        
-         type: "column",  
+      data: [{
+         type: "column",
          dataPoints: data
       }]
    });
    chart.render();
 }
 
-/** 
+/**
  * donutchart
  * @param isInteractive Boolean. true if want chart to be interactive
  * @param theme   String of desired theme. The options are : “light1″, ”light2”, “dark1”, or “dark2”
@@ -221,7 +224,7 @@ function donutchart(data, isInteractive, theme, title){
    chart.render();
 }
 
-/** 
+/**
  * scatterchart
  * @param isInteractive Boolean. true if want chart to be interactive
  * @param theme   String of desired theme. The options are : “light1″, ”light2”, “dark1”, or “dark2”
@@ -252,7 +255,7 @@ function scatterchart(data, isInteractive, theme, title, xAxisTitle, yAxisTitle)
    chart.render();
 }
 /************************************************************************************
- * Setup of the Div element that the graphs will be rendered into 
+ * Setup of the Div element that the graphs will be rendered into
  ************************************************************************************/
 
 // Tracks the id of the graph
@@ -266,7 +269,7 @@ function setupGraphDiv(){
    ++idGraph;
    //creating div and remove button
    div = createGraphDiv();
-   button = createRemoveButton(); 
+   button = createRemoveButton();
 
    //add to the div with the id graphContainer
    $("#graphContainer").append(div).append(button);
@@ -287,16 +290,16 @@ function createGraphDiv(){
  * Should NEVER call except in setupGraphDiv()
  */
 function createRemoveButton(){
-   button = document.createElement('button'); 
+   button = document.createElement('button');
    button.id = idGraph.toString();
    button.setAttribute("value", "Remove");
 
-   button.onclick = (function(){ 
+   button.onclick = (function(){
        var graphDiv = document.getElementById("Graph" + this.id.toString());
        var buttonDiv = document.getElementById(this.id.toString());
        buttonDiv.parentNode.removeChild(buttonDiv);
-       graphDiv.parentNode.removeChild(graphDiv); 
-        
+       graphDiv.parentNode.removeChild(graphDiv);
+
     })
     return button;
 }

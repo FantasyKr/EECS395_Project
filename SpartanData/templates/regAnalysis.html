@@ -36,8 +36,8 @@
 				<div class="container">
 					<header class="major special">
 						<h3>Attribute Selection</h3>
-						<br>				
-						<select id="attributeSel" name="attributeSelection"></select>
+						<br>
+						<select id="attributeSel" name="attributeSelection">{{attributes}}</select>
 						<br>
 						<div id=testDIV> hello </div>
 						<h3> Select Range</h3>
@@ -56,7 +56,7 @@
 						<br>
 						<!-- Trigger/Open The Modal -->
 						<button id="myMasterBtn">Create Graph</button>
-							<div id="myMasterModal" class="modal"> 
+							<div id="myMasterModal" class="modal">
 								<div class="modal-content">
 									<div class="modal-header">
 										<span class="close" id="closeMaster">&times;</span>
@@ -70,10 +70,10 @@
 									</div>
 								</div>
 							</div>
-						
+
 
 							<!-- The Line Modal -->
-							<div id="myLineModal" class="modal"> 
+							<div id="myLineModal" class="modal">
 								<div class="modal-content">
 									<div class="modal-header">
 										<span class="close" id="closeLine">&times;</span>
@@ -81,7 +81,7 @@
 									</div>
 									<div class="modal-body">
 										<form id="LineForm" method="post">
-											{% csrf_token %} 
+											{% csrf_token %}
 											Title: <input type="text" placeholder = "title" id="linetitle" size="1"/>
 											X-Axis Title:<input type="text" placeholder = "x-axis title" id="lineXAxisTitle" size="1"/>
 											Y-Axis Title: <input type="text" placeholder = "y-axis title" id="lineYAxisTitle" size="1"/>
@@ -94,15 +94,15 @@
 											<br>
 											<input type="submit" class="btn" value="Create Graph" name="mybtn">
 										</form>
-									</div>					
+									</div>
 								</div>
 							</div>
 
-						
-						
+
+
 							<!-- The Bar Modal -->
 							<div id="myBarModal" class="modal">
-								<div class="modal-content"> 
+								<div class="modal-content">
 									<div class="modal-header">
 										<span class="close" id="closeBar">&times;</span>
 										<h2>Bar Graph</h2>
@@ -121,10 +121,10 @@
 											<br>
 											<input type="submit" class="btn" id="SUBMITFUCKER" value="Create Graph" name="mybtn">
 										</form>
-									</div>			
+									</div>
 								</div>
 							</div>
-						
+
 							<!-- The Donut Modal -->
 							<div id="myDonutModal" class="modal">
 
@@ -136,7 +136,7 @@
 									</div>
 									<div class="modal-body">
 										<form id="DonutForm" method="post">
-											{% csrf_token %} 
+											{% csrf_token %}
 											Attribute: <select id="donutAttribute" name="attribute" required>
 												<option value="light1">Light 1</option>
 												<option value="light2">Light 2</option>
@@ -153,11 +153,11 @@
 											<br>
 											<input type="submit" class="btn" value="Create Graph" name="mybtn">
 										</form>
-										
-									</div>			
+
+									</div>
 								</div>
 							</div>
-						
+
 						<!-- The Scatter Modal -->
 							<div id="myScatterModal" class="modal">
 								<div class="modal-content">
@@ -167,7 +167,7 @@
 									</div>
 									<div class="modal-body">
 										<form id="ScatterForm" method="post" >
-											{% csrf_token %} 
+											{% csrf_token %}
 											Title: <input type="text" placeholder = "title" id="scattertitle" size="1"/>
 											X-Axis Title: <input type="text" placeholder = "x-axis title" id="scatterXAxisTitle" size="1"/>
 											Y-Axis Title: <input type="text" placeholder = "y axis title" id="scatterYAxisTitle" size="1"/>
@@ -184,8 +184,8 @@
 								</div>
 							</div>
 					</header>
-			
-				<!-- Graph Container -->	
+
+				<!-- Graph Container -->
 				<div id="graphContainer"> </div>
 
 					<!-- Footer -->
