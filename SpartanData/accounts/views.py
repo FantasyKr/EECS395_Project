@@ -51,6 +51,7 @@ def predAnalysis(request):
     context = {
         'uploaded_file': uploaded_file,
         'attributes': attributes,
+        'features': attributes,
         
     }
     return render(request, 'predAnalysis.html', context)

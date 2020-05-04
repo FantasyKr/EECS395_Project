@@ -44,12 +44,10 @@
 						<br>
 						<br>
 						<h3>Select Attribute</h3>
-							<select id="attributeSel">{{attributes}} </select>
-							<div id="attributes" style="display: none;">{{ attributes }}</div>
+							<select id="attributeSel" name="attributeSelection">{{attributes}}</select>
 						<br>
 						<h3> Select Feature</h3>
-							<select id="featureSel" multiple>{{attributes}} </select>
-							<div id="features" style="display: none;">{{ attributes }}</div>
+							<select id="featureSel" multiple>{{features}} </select>
 						<br>
 						<button id="submitRequest" type="button">Submit Model and Attributes</button>
 						<div id="myOutput"></div>
@@ -70,6 +68,7 @@
 			<script>
 				$( document ).ready(function() {
 					var attributeClicked = false
+					var featureClicked = false
 					
 					$("#myClickButton").click(function() {
     					$.get("/output/", function(data) {
@@ -105,13 +104,13 @@
 						var selectedOption = newOptions[0];
 
 						var select2 = document.getElementById("featureSel");
-						if (attributeClicked == false) {
+						if (featureClicked == false) {
 							$.each(newOptions, function(text, value) {
 								select2.appendChild(new Option(value, text));
 							});
 						}
 					
-						attributeClicked = true
+						featureClicked = true
 						console.log(selectedOption);
 					});
 
