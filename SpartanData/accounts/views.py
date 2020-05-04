@@ -18,6 +18,7 @@ from .tokens import account_activation_token
 from django.core.mail import EmailMessage
 from django.http import HttpResponse
 from .forms import UploadDataForm
+from .PredAnalysis import methodA
 
 import json
 
@@ -45,13 +46,26 @@ def predAnalysis(request):
     global GLOBAL_df, GLOBAL_attributes, GLOBAL_uploaded_file
     attributes = GLOBAL_attributes
     uploaded_file = GLOBAL_uploaded_file
-
+    method_object = ''
+    
     context = {
         'uploaded_file': uploaded_file,
         'attributes': attributes,
+        
     }
-
     return render(request, 'predAnalysis.html', context)
+
+def output(request):
+    method_object= ''
+    if request.is_ajax():
+        method_object = methodA(3)
+
+    #context = {
+     #   'uploaded_file': uploaded_file,
+     #   'attributes': attributes,
+        
+    #}
+    return render(request, 'output.html', {'output': method_object})
 
 def regAnalysis(request):
     global GLOBAL_df, GLOBAL_attributes

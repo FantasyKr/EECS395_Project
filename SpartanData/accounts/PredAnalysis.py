@@ -21,8 +21,10 @@ def data_prep(df):
     replace_values = {'negative':0, 'positive':1, 'f':0, 't':1}
     df = df.replace(to_replace=replace_values)
     return df
-
-
+#test method
+def methodA(value):
+    some_variable = value
+    return some_variable
 # This method returns a list of attributes from the dataframe.
 def attribute_list(df):
     return list(df)

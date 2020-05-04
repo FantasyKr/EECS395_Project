@@ -40,6 +40,8 @@
 							  <option value="Naive Bayes">Naive Bayes</option>
 						</select>
 						<br>
+						<button id="myClickButton" type="button">Click</button>
+						<div id="myOutput"></div>
 						<br>
 						<h3>Select Attribute</h3>
 							<div id="attributes" style="display: none;">{{ attributes }}</div>
@@ -66,7 +68,12 @@
 			<script>
 				$( document ).ready(function() {
 					var attributeClicked = false
-
+					
+					$("#myClickButton").click(function() {
+    					$.get("/output/", function(data) {
+       						 $("#myOutput").html(data);
+    					}, "html");
+					});
 
 
 					$('#submit').click(function () {
