@@ -48,8 +48,8 @@ def regAnalysis(request):
     index = 0
     mean = 0
     median = 0
-    mode = 0
-    minRange = 0
+    mode = []
+    minRange = 1
     maxRange = 100
     print(attributes)
     
