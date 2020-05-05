@@ -47,6 +47,7 @@ def analysisChoose(request):
 def predAnalysis(request):
     global GLOBAL_df, GLOBAL_numerical_attributes, GLOBAL_uploaded_file, GLOBAL_pred_analysis_return
     attributes = GLOBAL_numerical_attributes
+    print(attributes)
     uploaded_file = GLOBAL_uploaded_file
     method_object = ''
 
@@ -80,8 +81,8 @@ def output(request):
     if request.is_ajax():
         if modelType == "Random Forest":
             output = 30
-        if modelType == "KNN Clustering":
-        if modelType == "Naive Bayes":
+        #if modelType == "KNN Clustering":
+        #if modelType == "Naive Bayes":
         #if modelType is random Forest
         #if modeltype is KNN clustering
 
@@ -188,7 +189,7 @@ def login_view(request):
                     context={'form':form})
 
 def dashboard(request):
-    global GLOBAL_df, GLOBAL_attributes
+    global GLOBAL_df, GLOBAL_attributes, GLOBAL_numerical_attributes
     if request.method == 'POST':
         uploaded_file = request.FILES['document']
         last_chars = uploaded_file.name[-3:]
@@ -218,7 +219,7 @@ def dashboard(request):
     return render(request, 'dashboard.html')
 
 def dashboardResubmit(request):
-    global GLOBAL_df, GLOBAL_attributes
+    global GLOBAL_df, GLOBAL_attributes, GLOBAL_numerical_attributes
     if request.method == 'POST':
         uploaded_file = request.FILES['document']
         last_chars = uploaded_file.name[-3:]
