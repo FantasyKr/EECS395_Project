@@ -26,6 +26,7 @@ GLOBAL_df = None
 GLOBAL_attributes = None
 GLOBAL_attributes_mean = None
 GLOBAL_uploaded_file = None
+GLOBAL_pred_analysis_return = None
 
 def home_view(request):
     return render(request, 'login_home.html')
@@ -47,6 +48,11 @@ def predAnalysis(request):
     attributes = GLOBAL_attributes
     uploaded_file = GLOBAL_uploaded_file
     method_object = ''
+
+    if request.method == 'POST':
+        arr = request.POST.get('arr')
+        GLOBAL_pred_analysis_return = arr
+        print(arr)
 
     context = {
         'uploaded_file': uploaded_file,

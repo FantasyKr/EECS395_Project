@@ -70,6 +70,27 @@
 					var attributeClicked = false
 					var featureClicked = false
 
+					function getCookie(c_name) {
+        		if(document.cookie.length > 0) {
+            	c_start = document.cookie.indexOf(c_name + "=");
+            	if(c_start != -1) {
+                c_start = c_start + c_name.length + 1;
+                c_end = document.cookie.indexOf(";", c_start);
+                if(c_end == -1) c_end = document.cookie.length;
+                return unescape(document.cookie.substring(c_start,c_end));
+            	}
+        		}
+        		return "";
+    			}
+
+    		$(function () {
+        	$.ajaxSetup({
+            headers: {
+                "X-CSRFToken": getCookie("csrftoken")
+            }
+        	});
+    		});
+
 					$("#myClickButton").click(function() {
     					$.get("/output/", function(data) {
        						 $("#myOutput").html(data);
@@ -117,11 +138,26 @@
 					$("#submitRequest").click(function() {
 						var modelType = document.getElementById("modelSel").value;
 						var selectAtt = document.getElementById("attributeSel").value;
-						console.log("1"); //Will give index of attribute desired
-						var values = $('#featureSel').val();
+					 //Will give index of attribute desired
+						var features = $('#featureSel').val();
 						console.log(modelType);
 						console.log(selectAtt);
-						console.log(values);
+						console.log(features);
+						var arr = [modelType, selectAtt, features];
+						var formData = new FormData();
+						formData.append('arr', arr);
+
+						$.ajax({
+							type: 'POST',
+							data: formData,
+							processData: false,
+							contentType: false
+						});
+
+						$.get("/output/", function(data) {
+								 $("#myOutput").html(data);
+						}, "html");
+
 					})
 					});
 			</script>
