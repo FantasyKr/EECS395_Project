@@ -24,6 +24,7 @@ import json
 
 GLOBAL_df = None
 GLOBAL_attributes = None
+GLOBAL_numerical_attributes = None
 GLOBAL_attributes_mean = None
 GLOBAL_uploaded_file = None
 GLOBAL_pred_analysis_return = None
@@ -44,8 +45,8 @@ def analysisChoose(request):
     return render(request, 'analysisChoose.html')
 
 def predAnalysis(request):
-    global GLOBAL_df, GLOBAL_attributes, GLOBAL_uploaded_file, GLOBAL_pred_analysis_return
-    attributes = GLOBAL_attributes
+    global GLOBAL_df, GLOBAL_numerical_attributes, GLOBAL_uploaded_file, GLOBAL_pred_analysis_return
+    attributes = GLOBAL_numerical_attributes
     uploaded_file = GLOBAL_uploaded_file
     method_object = ''
 
@@ -201,6 +202,7 @@ def dashboard(request):
             GLOBAL_df = df
             attributes = df.columns.values.tolist()
             GLOBAL_attributes = attributes
+            GLOBAL_numerical_attributes = attribute_list_num(df)
             GLOBAL_uploaded_file = uploaded_file
             print(GLOBAL_attributes)
             #request.sessions['df'] = df
@@ -229,6 +231,7 @@ def dashboardResubmit(request):
             GLOBAL_df = df
             attributes = df.columns.values.tolist()
             GLOBAL_attributes = attributes
+            GLOBAL_numerical_attributes = attribute_list_num(df)
             GLOBAL_uploaded_file = uploaded_file
             print("attribute: " + GLOBAL_attributes)
             #request.sessions['df'] = df
