@@ -17,11 +17,12 @@ sns.set(style="darkgrid")
 
 # This prep method should be run on a dataset before any model.
 def data_prep(df):
-    num_attributes = attribute_list(df)
+    attributes = attribute_list_num(df)
+    num_attributes = []
+    for attr in attributes:
+        num_attributes.append(df.columns.get_loc(attr))
     df = df.iloc[:,num_attributes]
     df = df.fillna(value=0)
-    replace_values = {'negative':0, 'positive':1, 'f':0, 't':1}
-    df = df.replace(to_replace=replace_values)
     return df
 #test method
 def methodA(value):
