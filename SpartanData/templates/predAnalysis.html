@@ -37,7 +37,7 @@
 						<!--<div id="myOutput"></div>-->
 						<h3>Model Selection</h3>
 						<select id="modelSel" name="modelSelection">
-							<option value="Random Forest">Random Forest</option>
+							<option value="Random Forest" selected>Random Forest</option>
   							<option value="KNN Clustering">KNN Clustering</option>
 							<option value="Naive Bayes">Naive Bayes</option>
 						</select>
@@ -110,10 +110,16 @@
 						var select2 = document.getElementById("attributeSel");
 						if (attributeClicked == false) {
 							$.each(newOptions, function(text, value) {
-								select2.appendChild(new Option(value, text));
+								if (text == 0){
+									var opt = new Option(value, text);
+									opt.selected = "selected";
+									select2.appendChild(opt);
+									
+								} else {
+									select2.appendChild(new Option(value, text));
+								}
 							});
 						}
-
 						attributeClicked = true
 						console.log(selectedOption);
 					});
@@ -129,7 +135,13 @@
 						var select2 = document.getElementById("featureSel");
 						if (featureClicked == false) {
 							$.each(newOptions, function(text, value) {
-								select2.appendChild(new Option(value, text));
+								if (text == 0){
+									var opt = new Option(value, text);
+									opt.selected = "selected";
+									select2.appendChild(opt);
+								} else {	
+									select2.appendChild(new Option(value, text));
+								}
 							});
 						}
 
