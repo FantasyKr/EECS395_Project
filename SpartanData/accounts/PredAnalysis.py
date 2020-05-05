@@ -119,5 +119,5 @@ def naive_bayes(df, pred_attr_index, feature_list):
     # Plot normalized confusion matrix
     disp = plot_confusion_matrix(classifier, X_test, y_test, 
                                  cmap=plt.cm.Blues,normalize='true').ax_.set_title("Normalized confusion matrix")
-    plt.savefig('confusion_matrix.png')
+    plt.savefig('static/images/confusion_matrix.png')
     return [a_string + accuracy, r_string + ROC]
