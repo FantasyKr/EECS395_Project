@@ -85,21 +85,19 @@ def output(request):
         numdf = data_prep(df)
         
         if modelType == "Random Forest":
-            print("reached here")
-            output = rand_forest(numdf)
+            print("reached forest")
+            output = rand_forest(numdf, attr_index, features)
 
         if modelType == "KNN Clustering":
-            output = ["KNN"]
+            #print("reached Clustering")
+            #output = k_neighbors(numdf, attr_index, features)
+            output = ["CLUSTER"]
+
         if modelType == "Naive Bayes":
-            poutput = ["Bayes"]
-        #if modelType is random Forest
-        #if modeltype is KNN clustering
+            #print("reaching Bayes")
+            #output = naive_bayes(numdf, attr_index, features)
+            output = ["Bayes"]
 
-    #context = {
-     #   'uploaded_file': uploaded_file,
-     #   'attributes': attributes,
-
-    #}
     return render(request, 'output.html', {'output': output})
 
 def regAnalysis(request):
