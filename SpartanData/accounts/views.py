@@ -74,13 +74,19 @@ def output(request):
     feature_string = variable.split(",")
     features = [int(i) for i in feature_string] #list of features
     print(features)
-    output = 10000
+    output = []
 
     if request.is_ajax():
+        numdf = data_prep(df)
+        
         if modelType == "Random Forest":
-            output = 30
+            print("reached here")
+            output = rand_forest(numdf)
+
         if modelType == "KNN Clustering":
+            output = ["KNN"]
         if modelType == "Naive Bayes":
+            poutput = ["Bayes"]
         #if modelType is random Forest
         #if modeltype is KNN clustering
 
