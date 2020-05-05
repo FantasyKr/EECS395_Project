@@ -47,6 +47,7 @@ def analysisChoose(request):
 def predAnalysis(request):
     global GLOBAL_df, GLOBAL_numerical_attributes, GLOBAL_uploaded_file, GLOBAL_pred_analysis_return
     attributes = GLOBAL_numerical_attributes
+    print(attributes)
     uploaded_file = GLOBAL_uploaded_file
     method_object = ''
 
@@ -68,12 +69,15 @@ def output(request):
     df = GLOBAL_df
     variablesString = GLOBAL_pred_analysis_return #string Model Type, 0, 1, 4, 5
     variablesArray = variablesString.split(",",2)
+    print(variablesArray)
     modelType = variablesArray[0]
+    print(modelType)
     attributeIndex = variablesArray[1]
     attr_index = int(attributeIndex) #Integer index
+    print(attr_index)
     variable = variablesArray[2]
     feature_string = variable.split(",")
-    features = [int(i) for i in feature_string] #list of features
+    features = [int(i) for i in feature_string] #list of features indexes
     print(features)
     output = []
 
@@ -194,7 +198,7 @@ def login_view(request):
                     context={'form':form})
 
 def dashboard(request):
-    global GLOBAL_df, GLOBAL_attributes
+    global GLOBAL_df, GLOBAL_attributes, GLOBAL_numerical_attributes
     if request.method == 'POST':
         uploaded_file = request.FILES['document']
         last_chars = uploaded_file.name[-3:]
@@ -224,7 +228,7 @@ def dashboard(request):
     return render(request, 'dashboard.html')
 
 def dashboardResubmit(request):
-    global GLOBAL_df, GLOBAL_attributes
+    global GLOBAL_df, GLOBAL_attributes, GLOBAL_numerical_attributes
     if request.method == 'POST':
         uploaded_file = request.FILES['document']
         last_chars = uploaded_file.name[-3:]
