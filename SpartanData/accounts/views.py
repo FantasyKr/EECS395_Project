@@ -89,14 +89,12 @@ def output(request):
             output = rand_forest(numdf, attr_index, features)
 
         if modelType == "KNN Clustering":
-            #print("reached Clustering")
-            #output = k_neighbors(numdf, attr_index, features)
-            output = ["CLUSTER"]
+            print("reached Clustering")
+            output = k_neighbors(numdf, attr_index, features)
 
         if modelType == "Naive Bayes":
-            #print("reaching Bayes")
-            #output = naive_bayes(numdf, attr_index, features)
-            output = ["Bayes"]
+            print("reaching Bayes")
+            output = naive_bayes(numdf, attr_index, features)
 
     return render(request, 'output.html', {'output': output})
 
