@@ -28,7 +28,7 @@ def methodA(value):
     some_variable = value
     return some_variable
 # This method returns a list of attributes from the dataframe.
-def attribute_list(df):
+def attribute_list_num(df):
     num_attributes = []
     attributes = list(df)
     for attribute in attributes:

@@ -18,7 +18,7 @@ from .tokens import account_activation_token
 from django.core.mail import EmailMessage
 from django.http import HttpResponse
 from .forms import UploadDataForm
-from .PredAnalysis import methodA
+from .PredAnalysis import data_prep, rand_forest, k_neighbors, naive_bayes, attribute_list_num
 
 import json
 
@@ -44,7 +44,7 @@ def analysisChoose(request):
     return render(request, 'analysisChoose.html')
 
 def predAnalysis(request):
-    global GLOBAL_df, GLOBAL_attributes, GLOBAL_uploaded_file
+    global GLOBAL_df, GLOBAL_attributes, GLOBAL_uploaded_file, GLOBAL_pred_analysis_return
     attributes = GLOBAL_attributes
     uploaded_file = GLOBAL_uploaded_file
     method_object = ''
@@ -52,7 +52,7 @@ def predAnalysis(request):
     if request.method == 'POST':
         arr = request.POST.get('arr')
         GLOBAL_pred_analysis_return = arr
-        print(arr)
+        print(GLOBAL_pred_analysis_return)
 
     context = {
         'uploaded_file': uploaded_file,
@@ -63,16 +63,33 @@ def predAnalysis(request):
     return render(request, 'predAnalysis.html', context)
 
 def output(request):
-    method_object= ''
+    global GLOBAL_pred_analysis_return, GLOBAL_df
+    df = GLOBAL_df
+    variablesString = GLOBAL_pred_analysis_return #string Model Type, 0, 1, 4, 5
+    variablesArray = variablesString.split(",",2)
+    modelType = variablesArray[0]
+    attributeIndex = variablesArray[1]
+    attr_index = int(attributeIndex) #Integer index
+    variable = variablesArray[2]
+    feature_string = variable.split(",")
+    features = [int(i) for i in feature_string] #list of features
+    print(features)
+    output = 10000
+
     if request.is_ajax():
-        method_object = methodA(3)
+        if modelType == "Random Forest":
+            output = 30
+        if modelType == "KNN Clustering":
+        if modelType == "Naive Bayes":
+        #if modelType is random Forest
+        #if modeltype is KNN clustering
 
     #context = {
      #   'uploaded_file': uploaded_file,
      #   'attributes': attributes,
 
     #}
-    return render(request, 'output.html', {'output': method_object})
+    return render(request, 'output.html', {'output': output})
 
 def regAnalysis(request):
     global GLOBAL_df, GLOBAL_attributes

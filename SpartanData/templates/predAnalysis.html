@@ -97,6 +97,7 @@
     					}, "html");
 					});
 
+
 					$('#attributeSel').click(function (){
 						var select = document.getElementById("attributeSel").innerHTML;
 						console.log(select);
@@ -153,11 +154,11 @@
 							processData: false,
 							contentType: false
 						});
-
+						
 						$.get("/output/", function(data) {
-								 $("#myOutput").html(data);
-						}, "html");
-
+       						 $("#myOutput").html(data);
+    					}, "html");
+					
 					})
 					});
 			</script>
